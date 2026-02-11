@@ -1,0 +1,48 @@
+/* Global app styling */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #1f1c2b, #1a1623);
+}
+
+
+#messageLabel {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 40px;
+}
+
+/* Title label */
+#titleLabel {
+    -fx-text-fill: #e8eefc;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+/* Default buttons */
+.button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 10;
+    -fx-padding: 10 18;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2563eb;
+}
+
+.button:pressed {
+    -fx-background-color: #1d4ed8;
+}
+
+/* Optional: make "Design" look secondary by assigning styleClass="secondary" in FXML */
+.button.secondary {
+    -fx-background-color: rgba(255,255,255,0.14);
+    -fx-text-fill: #e8eefc;
+}
+
+.button.secondary:hover {
+    -fx-background-color: rgba(255,255,255,0.20);
+}
+
