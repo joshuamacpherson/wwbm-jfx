@@ -4,6 +4,13 @@
     -fx-background-color: linear-gradient(to bottom, #1f1c2b, #1a1623);
 }
 
+.currentTier {
+    -fx-background-color: #2d7df6;
+    -fx-background-radius: 6;
+    -fx-border-color: #5aa2ff;
+    -fx-border-radius: 6;
+    -fx-padding: 6 14 6 14;
+}
 
 #messageLabel {
     -fx-text-fill: #FFFFFF;
