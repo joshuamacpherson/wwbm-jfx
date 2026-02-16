@@ -1,5 +1,8 @@
 package ass2.ass2_jfx;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+
 public class Question {
     private final String questionText;
     private final String[] answers;

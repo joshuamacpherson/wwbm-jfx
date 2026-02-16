@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ass2.ass2_jfx.menuController">
+<VBox fx:controller="ass2.ass2_jfx.designController" alignment="CENTER" spacing="32.0" xmlns:fx="http://javafx.com/fxml">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Label fx:id="welcomeText" text="Main Menu" />
-    <Button text="Play" onAction="#onPlayClick" />
-    <Button text="Design" onAction="#onDesignClick" />
+    <Label fx:id="welcomeText" text="Design Mode" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 50px"/>
+    <Button text="Main Menu" onAction="#onMainMenuClick" style="-fx-padding: 10px 20px"/>
+    <Button fx:id="questionManager" text="Question Manager" onAction="#showQuestionForm" style="-fx-padding: 10px 20px"/>
+
+    <HBox spacing="20" maxWidth="400">
+    <VBox spacing="10" alignment="CENTER" maxWidth="400" visible="false" managed="false" fx:id="listViewContainer" VBox.vgrow="ALWAYS">
+        <Label text="Questions" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px"/>
+        <ListView fx:id="questionListView" maxWidth="400" />
+    </VBox>
+
+    <VBox fx:id="questionForm" spacing="10" visible="false" managed="false" maxWidth="400" alignment="CENTER" VBox.vgrow="ALWAYS">
+        <TextField fx:id="questionField" promptText="Enter question here" maxWidth="400"/>
+        <TextField fx:id="answerA" promptText="Answer A" maxWidth="400"/>
+        <TextField fx:id="answerB" promptText="Answer B" maxWidth="400"/>
+        <TextField fx:id="answerC" promptText="Answer C" maxWidth="400"/>
+        <TextField fx:id="answerD" promptText="Answer D" maxWidth="400"/>
+        <ComboBox fx:id="correctAns" promptText="Select correct answer" maxWidth="250"/>
+        <Button fx:id="AddQ" text="Add Question" onAction="#addQuestion" style="-fx-padding: 10px 20px"/>
+        <Button fx:id="EditQ" text="Edit Question" onAction="#editQuestion" style="-fx-padding: 10px 20px"/>
+        <Button fx:id="DelQ" text="Delete Question" onAction="#deleteQuestion" style="-fx-padding: 10px 20px"/>
+    </VBox>
+    </HBox>
 </VBox>
