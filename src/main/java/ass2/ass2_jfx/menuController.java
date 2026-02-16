@@ -19,7 +19,6 @@ public class menuController {
     @FXML
     public void onDesignClick(ActionEvent event) {
         try {
-            
             sceneController.getInstance().switchToDesign(event);
         } catch (IOException e) {
             e.printStackTrace();
