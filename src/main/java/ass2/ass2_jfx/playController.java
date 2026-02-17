@@ -10,6 +10,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 public class playController {
     @FXML private Label messageLabel;
@@ -36,6 +37,7 @@ public class playController {
     @FXML private Label tier14;
     @FXML private Label tier15;
     @FXML private Label playerMoneyLabel;
+    @FXML private Label playerMoneyAmountLabel;
     @FXML private Label timerLabel;
     private Timeline timer;
     private int timeLeft;
@@ -46,9 +48,16 @@ public class playController {
     
     Question question = new Question("Who's the best?", new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"}, 0);
     int currentTier = 0;
-    
+
     @FXML
     private void initialize() {
+        languageController.getInstance().setLocale(Locale.FRENCH);
+        messageLabel.setText(languageController.getInstance().getString("timeUp"));
+        playerMoneyLabel.setText(languageController.getInstance().getString("playerMoney"));
+        next.setText(languageController.getInstance().getString("next"));
+        restart.setText(languageController.getInstance().getString("restart"));
+        mainMenu.setText(languageController.getInstance().getString("menu"));
+
         tiers = new Label[] { tier1, tier2, tier3, tier4, tier5, tier6, tier7, tier8, tier9, tier10, tier11, tier12, tier13, tier14, tier15 };
         int[] prices = {
             100, 200, 300, 500, 1000,
@@ -97,7 +106,7 @@ public class playController {
         if (question.isCorrect(clickedAnswer)) {
             messageLabel.setText("Correct!");
             playerMoney += tierMap.get(tiers[currentTier]);
-            playerMoneyLabel.setText("$" + playerMoney);
+            playerMoneyAmountLabel.setText("$" + playerMoney);
             next.setVisible(true);
             currentTier++;
         } else {
@@ -132,7 +141,7 @@ public class playController {
         restart.setVisible(false);
         mainMenu.setVisible(false);
         playerMoney = 0;
-        playerMoneyLabel.setText("$" + playerMoney);
+        playerMoneyAmountLabel.setText("$" + playerMoney);
         tiers[currentTier].getStyleClass().remove("currentTier");
         currentTier = 0;
         loadQuestion(question);

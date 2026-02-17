@@ -21,7 +21,7 @@
             <Insets bottom="150.0" left="20.0" right="20.0" top="20.0"/>
         </padding>
 
-        <Button prefHeight="60" prefWidth="120" text="Play" onAction="#onPlayClick" style="-fx-font-size:24px"/>
-        <Button prefHeight="60" prefWidth="120" text="Design" onAction="#onDesignClick" style="-fx-font-size:24px"/>
+        <Button fx:id="playButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Play" onAction="#onPlayClick" style="-fx-font-size:24px"/>
+        <Button fx:id="designButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Design" onAction="#onDesignClick" style="-fx-font-size:24px"/>
     </VBox>
 </StackPane>
