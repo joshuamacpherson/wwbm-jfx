@@ -13,7 +13,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Label fx:id="welcomeText" text="Design Mode" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 50px"/>
+    <Label text="Design Mode" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 50px"/>
     <Button text="Main Menu" onAction="#onMainMenuClick" style="-fx-padding: 10px 20px"/>
     <Button fx:id="questionManager" text="Question Manager" onAction="#showQuestionForm" style="-fx-padding: 10px 20px"/>
 
@@ -31,8 +31,9 @@
         <TextField fx:id="answerD" promptText="Answer D" maxWidth="400"/>
         <ComboBox fx:id="correctAns" promptText="Select correct answer" maxWidth="250"/>
         <Button fx:id="AddQ" text="Add Question" onAction="#addQuestion" style="-fx-padding: 10px 20px"/>
-        <Button fx:id="EditQ" text="Edit Question" onAction="#editQuestion" style="-fx-padding: 10px 20px"/>
-        <Button fx:id="DelQ" text="Delete Question" onAction="#deleteQuestion" style="-fx-padding: 10px 20px"/>
+        <Button text="Edit Question" onAction="#editQuestion"/>
+        <Button text="Save Edits" onAction="#saveEditedQuestion"/>
+        <Button text="Delete Question" onAction="#deleteQuestion" style="-fx-padding: 10px 20px"/>
     </VBox>
     </HBox>
 </VBox>
