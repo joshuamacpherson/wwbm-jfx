@@ -1,7 +1,6 @@
 package ass2.ass2_jfx;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +29,6 @@ public class menuController {
      */
     @FXML
     private void initialize() {
-        languageController.getInstance().setLocale(Locale.FRENCH);
         playButton.setText(
                 languageController.getInstance().getString("play")
         );

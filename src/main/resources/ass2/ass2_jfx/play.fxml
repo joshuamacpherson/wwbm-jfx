@@ -14,7 +14,7 @@
            fx:controller="ass2.ass2_jfx.playController">
 
     <!-- Background Image Layer -->
-    <ImageView fitHeight="500" fitWidth="500" translateY="-100">
+    <ImageView fitHeight="200" fitWidth="200" translateY="-300">
         <Image url="@/ass2/ass2_jfx/WWTBAMUS2020Logo.png"/>
     </ImageView>
 
@@ -62,7 +62,7 @@
         <center>
             <BorderPane>
                 <center>
-                    <VBox alignment="CENTER" spacing="20" translateY="300">
+                    <VBox alignment="CENTER" spacing="20">
                         <Label fx:id="messageLabel" text="Question: Who are you?"
                                style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
                     </VBox>
@@ -107,6 +107,12 @@
                                 GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.rowSpan="2"
                                 GridPane.valignment="CENTER"
                                 onAction="#onRestartClick" visible="false"/>
+                        <Button fx:id="langButton" text="EN"
+                                style="-fx-text-fill: white; -fx-font-size: 20px;"
+                                prefWidth="80" prefHeight="60"
+                                GridPane.columnIndex="0" GridPane.rowIndex="2"
+                                GridPane.columnSpan="2"
+                                GridPane.halignment="CENTER" onAction="#toggleLang"/>
                     </GridPane>
                 </bottom>
                 <top>
