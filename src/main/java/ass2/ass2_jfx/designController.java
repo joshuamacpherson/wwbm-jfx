@@ -3,6 +3,7 @@ package ass2.ass2_jfx;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
  */
 public class designController {
 
+    @FXML private Button AddQ;
     @FXML private VBox listViewContainer;
     @FXML private VBox questionForm;
+    @FXML private VBox playerForm;
     @FXML private TextField questionField;
     @FXML private TextField answerA;
     @FXML private TextField answerB;
@@ -28,11 +31,15 @@ public class designController {
     @FXML private ComboBox<String> correctAns;
     @FXML private ListView<Question> questionListView;
     @FXML private Button questionManager;
-    @FXML private Button AddQ;
+    @FXML private Button playerManager;
     @FXML private ListView<Player> playerListView;
     @FXML private TextField playerNameField;
+    @FXML private ImageView backgroundImage;
 
+    /** Stores all created players */
     private final ArrayList<Player> players = new ArrayList<>();
+
+    /** Tracks the question currently being edited */
     private Player playerBeingEdited = null;
 
     /** Stores all created questions. */
@@ -224,9 +231,7 @@ public class designController {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Delete");
         confirm.setHeaderText(null);
-        confirm.setContentText(
-                "Are you sure you want to delete this question?"
-        );
+        confirm.setContentText("Are you sure you want to delete this question?");
 
         if (confirm.showAndWait().get() == ButtonType.OK) {
             questions.remove(selected);
@@ -241,20 +246,22 @@ public class designController {
      */
     @FXML
     private void showQuestionForm(ActionEvent event) {
-
         boolean isQuestionFormVisible = questionForm.isVisible();
         boolean isListViewVisible = listViewContainer.isVisible();
 
         questionForm.setVisible(!isQuestionFormVisible);
         questionForm.setManaged(!isQuestionFormVisible);
-
         listViewContainer.setVisible(!isListViewVisible);
         listViewContainer.setManaged(!isListViewVisible);
 
+        playerForm.setVisible(false);
+        playerForm.setManaged(false);
+        playerManager.setText("Player Manager");
+
+        backgroundImage.setVisible(isQuestionFormVisible && !playerForm.isVisible());
+
         if (isQuestionFormVisible) {
             questionManager.setText("Question Manager");
-        } else {
-            questionManager.setText("Back");
         }
     }
 
@@ -266,8 +273,136 @@ public class designController {
         correctAns.getItems().addAll("A", "B", "C", "D");
     }
 
+    /**
+     * Allows the admin to add a player to the game.
+     *
+     * @param event the button click event
+     */
     @FXML
     private void addPlayer(ActionEvent event) {
         String name = playerNameField.getText();
+
+        if (name.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a player name.");
+            alert.showAndWait();
+        }
+
+        Player player = new Player(name);
+        players.add(player);
+        playerListView.getItems().add(player);
+        playerNameField.clear();
+    }
+
+    /**
+     * Allows the admin to edit an added player in the game.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void editPlayer(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a player to edit");
+            alert.showAndWait();
+        }
+
+        playerBeingEdited = selected;
+        assert selected != null;
+        playerNameField.setText(selected.getName());
+    }
+
+    /**
+     * Allows the admin to save an edited player in the game.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void saveEditedPlayer(ActionEvent event) {
+
+        if (playerBeingEdited == null) {
+            return;
+        }
+
+        String name = playerNameField.getText();
+
+        if (name.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validation Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a player name.");
+            alert.showAndWait();
+        }
+
+        int ind = players.indexOf(playerBeingEdited);
+        Player updated = new Player(name);
+        players.set(ind, updated);
+        playerListView.getItems().set(ind, updated);
+        playerBeingEdited = null;
+        playerNameField.clear();
+        playerListView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Allows the admin to delete a player from the game.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void deletePlayer(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a player to delete");
+            alert.showAndWait();
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete this player?");
+
+        if (confirm.showAndWait().get() == ButtonType.OK) {
+            players.remove(selected);
+            playerListView.getItems().remove(selected);
+        }
+    }
+
+    /**
+     * Toggles visibility of the Question Manager section.
+     * Ensures Player Manager is hidden when Question Manager is active.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void showPlayerForm(ActionEvent event) {
+        boolean isVisible = playerForm.isVisible();
+
+        playerForm.setVisible(!isVisible);
+        playerForm.setManaged(!isVisible);
+
+        questionForm.setVisible(false);
+        questionForm.setManaged(false);
+
+        listViewContainer.setVisible(false);
+        listViewContainer.setManaged(false);
+
+        questionManager.setText("Question Manager");
+
+        backgroundImage.setVisible(isVisible);
+
+        if (isVisible) {
+            playerManager.setText("Player Manager");
+            backgroundImage.setVisible(true);
+        }
     }
 }
