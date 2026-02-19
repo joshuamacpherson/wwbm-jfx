@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+
+<MenuBar style="-fx-background-color: #3a006f;">
+    <Menu text="File">
+        <MenuItem text="Exit"/>
+    </Menu>
+    <Menu text="Configuration">
+        <MenuItem text="Settings"/>
+    </Menu>
+    <Menu text="Look &amp; Feel">
+        <MenuItem text="Default"/>
+    </Menu>
+    <Menu text="Language">
+        <MenuItem text="English"/>
+        <MenuItem text="French"/>
+    </Menu>
+</MenuBar>

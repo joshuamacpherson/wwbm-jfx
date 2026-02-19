@@ -7,21 +7,27 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="ass2.ass2_jfx.menuController">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ass2.ass2_jfx.menuController"
+      VBox.vgrow="ALWAYS">
+    <fx:include source="menubar.fxml"/>
 
-    <!-- Background Image Layer -->
-    <ImageView fitHeight="500" fitWidth="500" translateY="-100">
-        <Image url="@/ass2/ass2_jfx/WWTBAMUS2020Logo.png"/>
-    </ImageView>
+    <StackPane VBox.vgrow="ALWAYS">
 
-    <!-- Content Layer -->
-    <VBox alignment="BOTTOM_CENTER" spacing="20">
-        <padding>
-            <Insets bottom="150.0" left="20.0" right="20.0" top="20.0"/>
-        </padding>
+        <!-- Background Image -->
+        <ImageView fitHeight="500" fitWidth="500" translateY="-100">
+            <Image url="@/ass2/ass2_jfx/WWTBAMUS2020Logo.png"/>
+        </ImageView>
 
-        <Button fx:id="playButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Play" onAction="#onPlayClick" style="-fx-font-size:24px"/>
-        <Button fx:id="designButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Design" onAction="#onDesignClick" style="-fx-font-size:24px"/>
-    </VBox>
-</StackPane>
+        <!-- Buttons -->
+        <VBox alignment="BOTTOM_CENTER" spacing="20">
+            <padding>
+                <Insets bottom="150.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+            <Button fx:id="playButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Play" onAction="#onPlayClick" style="-fx-font-size:24px"/>
+            <Button fx:id="designButton" prefHeight="60" prefWidth="120" maxWidth="240" text="Design" onAction="#onDesignClick" style="-fx-font-size:24px"/>
+        </VBox>
+
+    </StackPane>
+
+</VBox>

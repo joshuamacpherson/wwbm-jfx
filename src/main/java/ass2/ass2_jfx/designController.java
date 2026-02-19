@@ -35,6 +35,8 @@ public class designController {
     @FXML private ListView<Player> playerListView;
     @FXML private TextField playerNameField;
     @FXML private ImageView backgroundImage;
+    @FXML private TextField playerMoneyField;
+    @FXML private Label playerTierLabel;
 
     /** Stores all created players */
     private final ArrayList<Player> players = new ArrayList<>();
@@ -316,6 +318,8 @@ public class designController {
         playerBeingEdited = selected;
         assert selected != null;
         playerNameField.setText(selected.getName());
+        playerMoneyField.setText(String.valueOf(selected.getPlayerMoney()));
+        playerTierLabel.setText("Tier: " + selected.getPlayerTier());
     }
 
     /**
@@ -404,5 +408,71 @@ public class designController {
             playerManager.setText("Player Manager");
             backgroundImage.setVisible(true);
         }
+    }
+
+    /**
+     * Allows the admin to add money to chosen player.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void addMoney(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            return;
+        }
+
+        try {
+            int amount = Integer.parseInt((playerMoneyField.getText()));
+            selected.addMoneyToPlayer(amount);
+            playerMoneyField.setText(String.valueOf(selected.getPlayerMoney()));
+        } catch (NumberFormatException e) {
+            return;
+        }
+    }
+
+    /**
+     * Allows the admin to boost the tier of the player.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void boostPlayerTier(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            return;
+        }
+        selected.boostPlayerTier();
+        playerTierLabel.setText("Tier: " + selected.getPlayerMoney());
+    }
+
+    /**
+     * Allows the admin to reset the players' money.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    private void resetPlayerMoney(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            return;
+        }
+        selected.resetPlayerMoney();
+        playerMoneyField.setText("0");
+    }
+
+    @FXML
+    private void resetPlayerTier(ActionEvent event) {
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            return;
+        }
+
+        selected.resetPlayerTier();
+        playerTierLabel.setText("0");
     }
 }
