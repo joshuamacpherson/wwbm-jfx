@@ -63,6 +63,10 @@ public class languageController {
         loadBundle();
     }
 
+    public Locale getLocale() {
+        return this.locale;
+    }
+
     /**
      * Retrieves a localized string from the resource bundle.
      *

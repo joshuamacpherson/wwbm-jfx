@@ -30,7 +30,6 @@ public class menuController {
      */
     @FXML
     private void initialize() {
-        languageController.getInstance().setLocale(Locale.FRENCH);
         playButton.setText(
                 languageController.getInstance().getString("play")
         );

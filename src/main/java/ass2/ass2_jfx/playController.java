@@ -34,6 +34,7 @@ public class playController {
     @FXML private Button next;
     @FXML private Button restart;
     @FXML private Button mainMenu;
+    @FXML private Button langButton;
 
     @FXML private Label tier1;
     @FXML private Label tier2;
@@ -87,12 +88,19 @@ public class playController {
      */
     @FXML
     private void initialize() {
-        languageController.getInstance().setLocale(Locale.FRENCH);
-        messageLabel.setText(languageController.getInstance().getString("timeUp"));
-        playerMoneyLabel.setText(languageController.getInstance().getString("playerMoney"));
-        next.setText(languageController.getInstance().getString("next"));
-        restart.setText(languageController.getInstance().getString("restart"));
-        mainMenu.setText(languageController.getInstance().getString("menu"));
+        languageController lc = languageController.getInstance();
+        messageLabel.setText(lc.getString("timeUp"));
+        playerMoneyLabel.setText(lc.getString("playerMoney"));
+        next.setText(lc.getString("next"));
+        restart.setText(lc.getString("restart"));
+        mainMenu.setText(lc.getString("menu"));
+
+        // Set language button text based on current locale
+        if (lc.getLocale().equals(Locale.ENGLISH)) {
+            langButton.setText("FR");
+        } else {
+            langButton.setText("EN");
+        }
 
         tiers = new Label[]{
                 tier1, tier2, tier3, tier4, tier5,
@@ -243,6 +251,19 @@ public class playController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void toggleLang() {
+        languageController lc = languageController.getInstance();
+        if (lc.getLocale().equals(Locale.ENGLISH)) {
+            lc.setLocale(Locale.FRENCH);
+            langButton.setText("EN");
+        } else {
+            lc.setLocale(Locale.ENGLISH);
+            langButton.setText("FR");
+        }
+        initialize();
     }
 
     /**
