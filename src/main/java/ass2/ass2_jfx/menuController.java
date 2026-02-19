@@ -1,7 +1,6 @@
 package ass2.ass2_jfx;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
