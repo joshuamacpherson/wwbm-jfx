@@ -37,10 +37,9 @@ public class appMain extends Application {
      * the primary stage.
      *
      * @param stage the primary stage provided by JavaFX
-     * @throws IOException if the FXML file cannot be loaded
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/menu.fxml")));
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
