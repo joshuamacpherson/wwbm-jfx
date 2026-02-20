@@ -37,7 +37,12 @@
     <StackPane VBox.vgrow="ALWAYS">
 
         <!-- Background Image Layer -->
-        <ImageView fitHeight="200" fitWidth="200" translateY="-300">
+        <ImageView fitHeight="300" fitWidth="300"
+                   StackPane.alignment="TOP_CENTER"
+                   preserveRatio="true">
+            <StackPane.margin>
+                <Insets top="150"/>
+            </StackPane.margin>
             <Image url="@/ass2/ass2_jfx/WWTBAMUS2020Logo.png"/>
         </ImageView>
 
@@ -83,50 +88,47 @@
 
             <center>
                 <BorderPane>
-                    <center>
-                        <VBox alignment="CENTER" spacing="20">
-                            <Label fx:id="messageLabel" text="Question: Who are you?"
-                                   style="-fx-font-size: 24px; -fx-font-weight: bold; "/>
-                        </VBox>
-                    </center>
-
                     <bottom>
                         <GridPane alignment="CENTER" hgap="20" vgap="10">
                             <padding>
-                                <Insets left="45.0" right="20.0" bottom="100.0"/>
+                                <Insets left="45.0" right="20.0" bottom="150.0"/>
                             </padding>
+                            <Label fx:id="messageLabel" text="Question: Who are you?"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold;"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="0"
+                                   GridPane.columnSpan="2" GridPane.halignment="CENTER" translateY="-30"/>
                             <Button fx:id="A" text="Josh"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="Infinity"
-                                    GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#onAnswerClick"/>
+                                    GridPane.columnIndex="0" GridPane.rowIndex="1" onAction="#onAnswerClick"/>
                             <Button fx:id="B" text="Shane"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="Infinity"
-                                    GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#onAnswerClick"/>
+                                    GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#onAnswerClick"/>
                             <Button fx:id="C" text="Devin"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="Infinity"
-                                    GridPane.columnIndex="0" GridPane.rowIndex="1" onAction="#onAnswerClick"/>
+                                    GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#onAnswerClick"/>
                             <Button fx:id="D" text="Brad"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="Infinity"
-                                    GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#onAnswerClick"/>
+                                    GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#onAnswerClick"/>
                             <Button fx:id="next" text="Next Question"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="300"
-                                    GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.rowSpan="2"
+                                    GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="2"
                                     GridPane.halignment="CENTER"
                                     onAction="#onNextClick" visible="false"/>
                             <Button fx:id="mainMenu" text="Main Menu"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="300"
-                                    GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.rowSpan="2"
+                                    GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="2"
                                     GridPane.valignment="CENTER"
                                     onAction="#onMainMenuClick" visible="false"/>
                             <Button fx:id="restart" text="Restart"
                                     style=" -fx-font-size: 24px;"
                                     prefWidth="300" prefHeight="60" maxWidth="300"
-                                    GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.rowSpan="2"
+                                    GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="2"
                                     GridPane.valignment="CENTER"
                                     onAction="#onRestartClick" visible="false"/>
                         </GridPane>
