@@ -55,8 +55,6 @@ public class designController {
     @FXML private Button saveChanges;
     @FXML private Button deletePlayer;
     @FXML private Label questionsLabel;
-    @FXML private TextField playerMoneyField;
-    @FXML private Label playerTierLabel;
 
     /**  Used for internationalization */
     languageController lc = languageController.getInstance();
@@ -232,6 +230,15 @@ public class designController {
      */
     @FXML
     private void deleteQuestion() {
+        if (questions.isEmpty()) {;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(lc.getString("noQuestions"));
+            alert.setHeaderText(null);
+            alert.setContentText(lc.getString("noQuestionsToDelete"));
+            alert.showAndWait();
+            return;
+        }
+
         Question selected = questionListView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
@@ -289,6 +296,7 @@ public class designController {
                 lc.getString("answerC"),
                 lc.getString("answerD")
         );
+        updateLanguage();
     }
 
     /**
@@ -325,13 +333,11 @@ public class designController {
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("selectPlayerEdit"));
             alert.showAndWait();
+            return;
         }
 
         playerBeingEdited = selected;
-        assert selected != null;
         playerNameField.setText(selected.getName());
-        playerMoneyField.setText(String.valueOf(selected.getPlayerMoney()));
-        playerTierLabel.setText(lc.getString("tier") + selected.getPlayerTier());
     }
 
     /**
@@ -352,6 +358,7 @@ public class designController {
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("enterPlayerNamePrompt"));
             alert.showAndWait();
+            return;
         }
 
         int ind = players.indexOf(playerBeingEdited);
@@ -376,6 +383,7 @@ public class designController {
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("selectPlayerDelete"));
             alert.showAndWait();
+            return;
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -445,6 +453,20 @@ public class designController {
         lightItem.setText(lc.getString("light"));
         englishItem.setText(lc.getString("english"));
         frenchItem.setText(lc.getString("french"));
+        questionField.setPromptText(lc.getString("enterQuestion"));
+        playerNameField.setPromptText(lc.getString("enterPlayerName"));
+        correctAns.setPromptText(lc.getString("selectCorrect"));
+        answerA.setPromptText(lc.getString("answerA"));
+        answerB.setPromptText(lc.getString("answerB"));
+        answerC.setPromptText(lc.getString("answerC"));
+        answerD.setPromptText(lc.getString("answerD"));
+        questionsLabel.setText(lc.getString("questions"));
+        correctAns.getItems().setAll(
+                lc.getString("answerA"),
+                lc.getString("answerB"),
+                lc.getString("answerC"),
+                lc.getString("answerD")
+        );
     }
 
     @FXML private void onExitClick()  { menuBarHelper.exit(); }
@@ -462,3 +484,4 @@ public class designController {
         updateLanguage();
     }
 }
+

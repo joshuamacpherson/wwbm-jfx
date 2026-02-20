@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
@@ -25,6 +26,8 @@ import java.util.Locale;
  * - Navigating back to the main menu
  */
 public class playController {
+
+    languageController lc = languageController.getInstance();
 
     @FXML
     private Label messageLabel;
@@ -106,14 +109,28 @@ public class playController {
      */
     private Label[] tiers;
 
-    /**
+    ArrayList<Question> questions = new ArrayList<Question>() {{
+        add(new Question("Who is the best superhero?", new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"}, 0));
+        add(new Question("What is the capital of France?", new String[]{"London", "Berlin", "Paris", "Rome"}, 2));
+        add(new Question("Which planet is known as the Red Planet?", new String[]{"Earth", "Mars", "Jupiter", "Venus"}, 1));
+        add(new Question("What is 2 + 2?", new String[]{"3", "4", "5", "6"}, 1));
+        add(new Question("Who wrote Hamlet?", new String[]{"Shakespeare", "Dickens", "Austen", "Tolkien"}, 0));
+        add(new Question("What is the largest ocean?", new String[]{"Atlantic", "Indian", "Arctic", "Pacific"}, 3));
+        add(new Question("What color do you get by mixing red and blue?", new String[]{"Green", "Purple", "Orange", "Yellow"}, 1));
+        add(new Question("Which animal is known as man's best friend?", new String[]{"Cat", "Dog", "Horse", "Rabbit"}, 1));
+        add(new Question("What is the boiling point of water?", new String[]{"90°C", "100°C", "110°C", "120°C"}, 1));
+        add(new Question("Who painted the Mona Lisa?", new String[]{"Van Gogh", "Da Vinci", "Picasso", "Rembrandt"}, 1));
+        add(new Question("What is the largest continent?", new String[]{"Africa", "Asia", "Europe", "Australia"}, 1));
+        add(new Question("What is the hardest natural substance?", new String[]{"Gold", "Iron", "Diamond", "Silver"}, 2));
+        add(new Question("Which gas do plants absorb?", new String[]{"Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"}, 1));
+        add(new Question("What is the main ingredient in bread?", new String[]{"Rice", "Wheat", "Corn", "Oats"}, 1));
+        add(new Question("Which country is famous for sushi?", new String[]{"China", "Japan", "Thailand", "Vietnam"}, 1));
+    }};
+
+/**
      * Current question being displayed.
      */
-    Question question = new Question(
-            "Who's the best?",
-            new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"},
-            0
-    );
+    Question question = questions.get(0);
 
     /**
      * Tracks the player's current prize tier index.
@@ -170,11 +187,12 @@ public class playController {
             if (timeLeft <= 0) {
                 timer.stop();
                 messageLabel.setText(lc.getString("timeUp"));
-                A.setDisable(true);
-                B.setDisable(true);
-                C.setDisable(true);
-                D.setDisable(true);
-                next.setVisible(true);
+                A.setVisible(false);
+                B.setVisible(false);
+                C.setVisible(false);
+                D.setVisible(false);
+                mainMenu.setVisible(true);
+                restart.setVisible(true);
             }
         }));
 
@@ -202,16 +220,29 @@ public class playController {
         Button clickedButton = (Button) event.getSource();
         String clickedAnswer = clickedButton.getText();
 
-        if (question.isCorrect(clickedAnswer)) {
+        if (questions.get(currentTier).isCorrect(clickedAnswer)) {
 
-            messageLabel.setText("Correct!");
+            if (currentTier == tiers.length - 1) {
+                messageLabel.setText(lc.getString("win"));
+                playerMoney += tierMap.get(tiers[currentTier]);
+                playerMoneyAmountLabel.setText("$" + playerMoney);
+                A.setVisible(false);
+                B.setVisible(false);
+                C.setVisible(false);
+                D.setVisible(false);
+                restart.setVisible(true);
+                mainMenu.setVisible(true);
+                return;
+            }
+
+            messageLabel.setText(lc.getString("correct"));
             playerMoney += tierMap.get(tiers[currentTier]);
             playerMoneyAmountLabel.setText("$" + playerMoney);
             next.setVisible(true);
             currentTier++;
 
         } else {
-            messageLabel.setText("Wrong! The correct answer is: " + question.getCorrectAnswer());
+            messageLabel.setText(lc.getString("incorrect") + " " + questions.get(currentTier).getCorrectAnswer());
             restart.setVisible(true);
             mainMenu.setVisible(true);
         }
@@ -228,7 +259,7 @@ public class playController {
     @FXML
     private void onNextClick() {
 
-        loadQuestion(question);
+        loadQuestion(questions.get(currentTier));
 
         A.setVisible(true);
         B.setVisible(true);
@@ -301,7 +332,7 @@ public class playController {
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
         playerMoneyLabel.setText(lc.getString("playerMoney"));
-        next.setText(lc.getString("next"));
+        next.setText(lc.getString("nextQuestion"));
         restart.setText(lc.getString("restart"));
         mainMenu.setText(lc.getString("mainMenu"));
     }
@@ -322,4 +353,5 @@ public class playController {
         updateLanguage();
     }
 }
+
 

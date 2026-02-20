@@ -25,7 +25,7 @@
         </MenuBar>
     </top>
     <left>
-        <VBox spacing="20" alignment="TOP_CENTER" prefWidth="250" style="-fx-background-color: rgba(0,0,0,0.4);">
+        <VBox spacing="20" alignment="TOP_CENTER" prefWidth="350" style="-fx-background-color: rgba(0,0,0,0.4);">
             <padding><Insets top="40" left="20" right="20" bottom="30"/></padding>
             <Label fx:id="designMode" text="Design Mode" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;"/>
             <Button fx:id="mainMenu" text="Main Menu" onAction="#onMainMenuClick"/>
