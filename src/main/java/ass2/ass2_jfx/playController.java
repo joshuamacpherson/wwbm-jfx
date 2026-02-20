@@ -208,6 +208,9 @@ public class playController {
         startTimer();
     }
 
+    /*
+     * need this to update UI or gamestate is lost
+     */
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
         playerMoneyLabel.setText(lc.getString("playerMoney"));

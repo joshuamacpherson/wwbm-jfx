@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * Handles scene switching throughout the application.
@@ -29,8 +30,8 @@ public class sceneController {
 
     private String currentTheme = "/ass2/ass2_jfx/styles-dark.css";
     private static sceneController instance;
-    private Stage stage; // store the stage
-    private String currentFxml; // track current scene
+    private Stage stage;
+    private String currentFxml;
 
     private sceneController() {}
 
@@ -41,7 +42,6 @@ public class sceneController {
         return instance;
     }
 
-    // Call this once from appMain when the app starts
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -64,8 +64,8 @@ public class sceneController {
 
     private void loadScene(String fxml) throws IOException {
         this.currentFxml = fxml;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
-
+        ResourceBundle bundle = ResourceBundle.getBundle("ass2.ass2_jfx.QMillionaire", languageController.getInstance().getLocale());
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)), bundle);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         double width = screenBounds.getWidth() * 0.7;
         double height = screenBounds.getHeight() * 0.7;
@@ -98,7 +98,6 @@ public class sceneController {
         loadScene("/ass2/ass2_jfx/design.fxml");
     }
 
-    // Keeps backward compatibility if stage isn't set yet
     private void grabStageFromEvent(ActionEvent event) {
         if (stage == null) {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * Entry point for the QMillionaire JavaFX application.
@@ -41,12 +42,28 @@ public class appMain extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/menu.fxml")));
+            ResourceBundle bundle = ResourceBundle.getBundle(
+                    "ass2.ass2_jfx.QMillionaire",
+                    languageController.getInstance().getLocale()
+            );
+
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(
+                            getClass().getResource("/ass2/ass2_jfx/menu.fxml")
+                    ),
+                    bundle
+            );
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
             double width = screenBounds.getWidth() * 0.7;
             double height = screenBounds.getHeight() * 0.7;
             Scene scene = new Scene(root, width, height);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/styles-dark.css")).toExternalForm());
+            scene.getStylesheets().add(
+                    Objects.requireNonNull(
+                            getClass().getResource(
+                                    "/ass2/ass2_jfx/styles-dark.css"
+                            )
+                    ).toExternalForm()
+            );
 
             stage.setTitle("QMillionaire");
             stage.setScene(scene);
@@ -54,6 +71,7 @@ public class appMain extends Application {
             stage.setMinHeight(800);
             stage.setResizable(true);
             stage.show();
+
             sceneController.getInstance().setStage(stage);
             sceneController.getInstance().setCurrentFxml("/ass2/ass2_jfx/menu.fxml");
 
