@@ -54,8 +54,8 @@ public class menuController {
 
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
-        playButton.setText(languageController.getInstance().getString("play"));
-        designButton.setText(languageController.getInstance().getString("design")
+        playButton.setText(lc.getString("play"));
+        designButton.setText(lc.getString("design")
         );
     }
 
