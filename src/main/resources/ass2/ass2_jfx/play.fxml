@@ -13,6 +13,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.MenuBar?>
 
+<?import javafx.scene.layout.Region?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="ass2.ass2_jfx.playController"
       VBox.vgrow="ALWAYS">
@@ -58,12 +59,34 @@
                         <Insets top="20.0" left="10.0"
                                 right="10.0"/>
                     </padding>
+
                     <Label fx:id="playerMoneyLabel"
                            text="%playerMoney"
                            style="-fx-font-size: 24px;"/>
                     <Label fx:id="playerMoneyAmountLabel"
                            text="\$0"
                            style="-fx-font-size: 24px;"/>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+
+                    <VBox alignment="CENTER" spacing="10">
+                        <padding>
+                            <Insets bottom="30.0"/>
+                        </padding>
+                        <Label text="Lifelines" style="-fx-font-size: 24px"/>
+                        <Button fx:id="fiftyFifty" text="Superposition"
+                                style="-fx-font-size: 18px;"
+                                prefWidth="200" prefHeight="50"
+                                />
+                        <Button fx:id="phoneAFriend" text="Entanglement"
+                                style="-fx-font-size: 18px;"
+                                prefWidth="200" prefHeight="50"
+                                />
+                        <Button fx:id="askTheAudience" text="Interference"
+                                style="-fx-font-size: 18px;"
+                                prefWidth="200" prefHeight="50"
+                                />
+                    </VBox>
                 </VBox>
             </left>
 

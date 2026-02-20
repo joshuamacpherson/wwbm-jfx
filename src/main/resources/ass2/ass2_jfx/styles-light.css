@@ -27,11 +27,11 @@
     -fx-text-fill: #3a006f;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
-    -fx-background-radius: 8;
+    -fx-background-radius: 12;
     -fx-padding: 10 20;
     -fx-cursor: hand;
     -fx-border-color: #3a006f;
-    -fx-border-radius: 8;
+    -fx-border-radius: 12;
     -fx-border-width: 2;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0.1, 0, 3);
 }
