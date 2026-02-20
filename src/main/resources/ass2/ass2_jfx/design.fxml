@@ -4,35 +4,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
 
 <BorderPane fx:controller="ass2.ass2_jfx.designController" xmlns:fx="http://javafx.com/fxml">
     <top>
-        <MenuBar style="-fx-background-color: #3a006f;"
-                 xmlns:fx="http://javafx.com/fxml">
-            <Menu text="File">
-                <MenuItem text="Exit" onAction="#onExitClick"/>
+        <MenuBar style="-fx-background-color: #3a006f;">
+            <Menu fx:id="fileMenu" text="File">
+                <MenuItem fx:id="exitItem" text="Exit" onAction="#onExitClick"/>
             </Menu>
-            <Menu text="Configuration">
-                <MenuItem text="Settings"/>
+            <Menu fx:id="configMenu" text="Configuration">
+                <MenuItem fx:id="settingsItem" text="Settings"/>
             </Menu>
-            <Menu text="Look &amp; Feel">
-                <MenuItem text="Dark" onAction="#onDarkClick"/>
-                <MenuItem text="Light" onAction="#onLightClick"/>
+            <Menu fx:id="lookFeelMenu" text="Look &amp; Feel">
+                <MenuItem fx:id="darkItem" text="Dark" onAction="#onDarkClick"/>
+                <MenuItem fx:id="lightItem" text="Light" onAction="#onLightClick"/>
             </Menu>
-            <Menu text="Language">
-                <MenuItem text="English" onAction="#onENClick"/>
-                <MenuItem text="French" onAction="#onFRClick"/>
+            <Menu fx:id="languageMenu" text="Language">
+                <MenuItem fx:id="englishItem" text="English" onAction="#onENClick"/>
+                <MenuItem fx:id="frenchItem" text="French" onAction="#onFRClick"/>
             </Menu>
         </MenuBar>
     </top>
     <left>
         <VBox spacing="20" alignment="TOP_CENTER" prefWidth="250" style="-fx-background-color: rgba(0,0,0,0.4);">
             <padding><Insets top="40" left="20" right="20" bottom="30"/></padding>
-            <Label text="Design Mode" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;"/>
-            <Button text="Main Menu" onAction="#onMainMenuClick"/>
+            <Label fx:id="designMode" text="Design Mode" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;"/>
+            <Button fx:id="mainMenu" text="Main Menu" onAction="#onMainMenuClick"/>
             <Button fx:id="questionManager" text="Question Manager" onAction="#showQuestionForm"/>
             <Button fx:id="playerManager" text="Player Manager" onAction="#showPlayerForm"/>
             <Region VBox.vgrow="ALWAYS"/>
@@ -51,7 +47,7 @@
                 <padding><Insets top="40"/></padding>
 
                 <VBox fx:id="listViewContainer" spacing="10" alignment="CENTER" visible="false" managed="false" maxWidth="500">
-                    <Label text="Questions" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px;"/>
+                    <Label fx:id="questionsLabel" text="Questions" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20px;"/>
                     <ListView fx:id="questionListView" maxWidth="500" prefHeight="200"/>
                 </VBox>
 
@@ -63,20 +59,20 @@
                     <TextField fx:id="answerD" promptText="Answer D" maxWidth="400"/>
                     <ComboBox fx:id="correctAns" promptText="Select correct answer" maxWidth="250"/>
                     <Button fx:id="AddQ" text="Add Question" onAction="#addQuestion"/>
-                    <Button text="Edit Question" onAction="#editQuestion"/>
-                    <Button text="Save Edits" onAction="#saveEditedQuestion"/>
-                    <Button text="Delete Question" onAction="#deleteQuestion"/>
+                    <Button fx:id="editQuestion" text="Edit Question" onAction="#editQuestion"/>
+                    <Button fx:id="saveEdits" text="Save Edits" onAction="#saveEditedQuestion"/>
+                    <Button fx:id="deleteQuestion" text="Delete Question" onAction="#deleteQuestion"/>
                 </VBox>
 
                 <VBox fx:id="playerForm" spacing="20" alignment="CENTER" visible="false" managed="false" maxWidth="500"
                       style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 15; -fx-padding: 35; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0.3, 0, 8);">
-                    <Label text="Player Manager" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 24px;"/>
+                    <Label fx:id="playerManagerLabel" text="Player Manager" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 24px;"/>
                     <ListView fx:id="playerListView" prefHeight="250" maxWidth="400" style="-fx-background-radius: 8;"/>
                     <TextField fx:id="playerNameField" promptText="Enter player name" maxWidth="400" style="-fx-background-radius: 8;"/>
-                    <Button text="Add Player" maxWidth="200" onAction="#addPlayer"/>
-                    <Button text="Edit Player" maxWidth="200" onAction="#editPlayer"/>
-                    <Button text="Save Changes" maxWidth="200" onAction="#saveEditedPlayer"/>
-                    <Button text="Delete Player" maxWidth="200" onAction="#deletePlayer"/>
+                    <Button fx:id="addPlayer" text="Add Player" maxWidth="200" onAction="#addPlayer"/>
+                    <Button fx:id="editPlayer" text="Edit Player" maxWidth="200" onAction="#editPlayer"/>
+                    <Button fx:id="saveChanges" text="Save Changes" maxWidth="200" onAction="#saveEditedPlayer"/>
+                    <Button fx:id="deletePlayer" text="Delete Player" maxWidth="200" onAction="#deletePlayer"/>
                 </VBox>
             </VBox>
         </StackPane>

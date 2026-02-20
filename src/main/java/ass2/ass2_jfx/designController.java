@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  * Controller for the Design Mode screen.
- *
  * Handles full CRUD operations for Question objects:
  * - Adding new questions
  * - Editing existing questions
@@ -19,7 +18,6 @@ import java.util.ArrayList;
  */
 public class designController {
 
-    @FXML private Button AddQ;
     @FXML private VBox listViewContainer;
     @FXML private VBox questionForm;
     @FXML private VBox playerForm;
@@ -35,8 +33,33 @@ public class designController {
     @FXML private ListView<Player> playerListView;
     @FXML private TextField playerNameField;
     @FXML private ImageView backgroundImage;
+    @FXML private Button AddQ;
+    @FXML private Menu fileMenu;
+    @FXML private Menu configMenu;
+    @FXML private Menu lookFeelMenu;
+    @FXML private Menu languageMenu;
+    @FXML private MenuItem exitItem;
+    @FXML private MenuItem settingsItem;
+    @FXML private MenuItem darkItem;
+    @FXML private MenuItem lightItem;
+    @FXML private MenuItem englishItem;
+    @FXML private MenuItem frenchItem;
+    @FXML private Label designMode;
+    @FXML private Label playerManagerLabel;
+    @FXML private Button mainMenu;
+    @FXML private Button editQuestion;
+    @FXML private Button saveEdits;
+    @FXML private Button deleteQuestion;
+    @FXML private Button addPlayer;
+    @FXML private Button editPlayer;
+    @FXML private Button saveChanges;
+    @FXML private Button deletePlayer;
+    @FXML private Label questionsLabel;
     @FXML private TextField playerMoneyField;
     @FXML private Label playerTierLabel;
+
+    /**  Used for internationalization */
+    languageController lc = languageController.getInstance();
 
     /** Stores all created players */
     private final ArrayList<Player> players = new ArrayList<>();
@@ -66,11 +89,9 @@ public class designController {
 
     /**
      * Adds a new question to the list after validating input fields.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void addQuestion(ActionEvent event) {
+    private void addQuestion() {
         String question = questionField.getText();
 
         String[] questionAnswers = {
@@ -89,9 +110,9 @@ public class designController {
                 || correctInd == -1) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validation Error");
+            alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
-            alert.setContentText("Please fill all fields and select the correct answer.");
+            alert.setContentText(lc.getString("fillAllFields"));
             alert.showAndWait();
             return;
         }
@@ -108,26 +129,24 @@ public class designController {
         correctAns.getSelectionModel().clearSelection();
 
         Alert success = new Alert(Alert.AlertType.INFORMATION);
-        success.setTitle("Question Added");
+        success.setTitle(lc.getString("questionAdded"));
         success.setHeaderText(null);
-        success.setContentText("Question added successfully.");
+        success.setContentText(lc.getString("questionAddedSuccess"));
         success.showAndWait();
     }
 
     /**
      * Loads the selected question into the form fields for editing.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void editQuestion(ActionEvent event) {
+    private void editQuestion() {
         Question selected = questionListView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
+            alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
-            alert.setContentText("Please select a question to edit.");
+            alert.setContentText(lc.getString("selectQuestionEdit"));
             alert.showAndWait();
             return;
         }
@@ -146,19 +165,17 @@ public class designController {
         );
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit Mode");
+        alert.setTitle(lc.getString("editMode"));
         alert.setHeaderText(null);
-        alert.setContentText("Now editing selected question.");
+        alert.setContentText(lc.getString("nowEditing"));
         alert.showAndWait();
     }
 
     /**
      * Saves changes made to the currently edited question.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void saveEditedQuestion(ActionEvent event) {
+    private void saveEditedQuestion() {
         if (questionBeingEdited == null) {
             return;
         }
@@ -182,11 +199,9 @@ public class designController {
                 || correctInd == -1) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validation Error");
+            alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
-            alert.setContentText(
-                    "Please fill all fields and select the correct answer."
-            );
+            alert.setContentText(lc.getString("fillAllFields"));
             alert.showAndWait();
             return;
         }
@@ -206,34 +221,32 @@ public class designController {
         questionListView.getSelectionModel().clearSelection();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
+        alert.setTitle(lc.getString("success"));
         alert.setHeaderText(null);
-        alert.setContentText("Changes have been saved successfully.");
+        alert.setContentText(lc.getString("changesSaved"));
         alert.showAndWait();
     }
 
     /**
      * Deletes the selected question after confirmation.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void deleteQuestion(ActionEvent event) {
+    private void deleteQuestion() {
         Question selected = questionListView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
+            alert.setTitle(lc.getString("noSelectionS"));
             alert.setHeaderText(null);
-            alert.setContentText("Please select a question to delete.");
+            alert.setContentText(lc.getString("selectQuestionDelete"));
             alert.showAndWait();
             return;
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Delete");
+        confirm.setTitle(lc.getString("confirmDelete"));
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to delete this question?");
+        confirm.setContentText(lc.getString("confirmDeleteQuestion"));
 
         if (confirm.showAndWait().get() == ButtonType.OK) {
             questions.remove(selected);
@@ -243,11 +256,9 @@ public class designController {
 
     /**
      * Toggles visibility between the question form and the list view.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void showQuestionForm(ActionEvent event) {
+    private void showQuestionForm() {
         boolean isQuestionFormVisible = questionForm.isVisible();
         boolean isListViewVisible = listViewContainer.isVisible();
 
@@ -258,12 +269,12 @@ public class designController {
 
         playerForm.setVisible(false);
         playerForm.setManaged(false);
-        playerManager.setText("Player Manager");
+        playerManager.setText(lc.getString("playerManager"));
 
         backgroundImage.setVisible(isQuestionFormVisible && !playerForm.isVisible());
 
         if (isQuestionFormVisible) {
-            questionManager.setText("Question Manager");
+            questionManager.setText(lc.getString("questionManager"));
         }
     }
 
@@ -272,23 +283,26 @@ public class designController {
      */
     @FXML
     public void initialize() {
-        correctAns.getItems().addAll("A", "B", "C", "D");
+        correctAns.getItems().addAll(
+                lc.getString("answerA"),
+                lc.getString("answerB"),
+                lc.getString("answerC"),
+                lc.getString("answerD")
+        );
     }
 
     /**
      * Allows the admin to add a player to the game.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void addPlayer(ActionEvent event) {
+    private void addPlayer() {
         String name = playerNameField.getText();
 
         if (name.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validation Error");
+            alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
-            alert.setContentText("Please enter a player name.");
+            alert.setContentText(lc.getString("enterPlayerNamePrompt"));
             alert.showAndWait();
         }
 
@@ -300,18 +314,16 @@ public class designController {
 
     /**
      * Allows the admin to edit an added player in the game.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void editPlayer(ActionEvent event) {
+    private void editPlayer() {
         Player selected = playerListView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
+            alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
-            alert.setContentText("Please select a player to edit");
+            alert.setContentText(lc.getString("selectPlayerEdit"));
             alert.showAndWait();
         }
 
@@ -319,16 +331,14 @@ public class designController {
         assert selected != null;
         playerNameField.setText(selected.getName());
         playerMoneyField.setText(String.valueOf(selected.getPlayerMoney()));
-        playerTierLabel.setText("Tier: " + selected.getPlayerTier());
+        playerTierLabel.setText(lc.getString("tier") + selected.getPlayerTier());
     }
 
     /**
      * Allows the admin to save an edited player in the game.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void saveEditedPlayer(ActionEvent event) {
+    private void saveEditedPlayer() {
 
         if (playerBeingEdited == null) {
             return;
@@ -338,9 +348,9 @@ public class designController {
 
         if (name.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validation Error");
+            alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
-            alert.setContentText("Please enter a player name.");
+            alert.setContentText(lc.getString("enterPlayerNamePrompt"));
             alert.showAndWait();
         }
 
@@ -355,25 +365,23 @@ public class designController {
 
     /**
      * Allows the admin to delete a player from the game.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void deletePlayer(ActionEvent event) {
+    private void deletePlayer() {
         Player selected = playerListView.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
+            alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
-            alert.setContentText("Please select a player to delete");
+            alert.setContentText(lc.getString("selectPlayerDelete"));
             alert.showAndWait();
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Delete");
+        confirm.setTitle(lc.getString("confirmDelete"));
         confirm.setHeaderText(null);
-        confirm.setContentText("Are you sure you want to delete this player?");
+        confirm.setContentText(lc.getString("confirmDeletePlayer"));
 
         if (confirm.showAndWait().get() == ButtonType.OK) {
             players.remove(selected);
@@ -384,11 +392,9 @@ public class designController {
     /**
      * Toggles visibility of the Question Manager section.
      * Ensures Player Manager is hidden when Question Manager is active.
-     *
-     * @param event the button click event
      */
     @FXML
-    private void showPlayerForm(ActionEvent event) {
+    private void showPlayerForm() {
         boolean isVisible = playerForm.isVisible();
 
         playerForm.setVisible(!isVisible);
@@ -400,90 +406,50 @@ public class designController {
         listViewContainer.setVisible(false);
         listViewContainer.setManaged(false);
 
-        questionManager.setText("Question Manager");
+        questionManager.setText(lc.getString("questionManager"));
 
         backgroundImage.setVisible(isVisible);
 
         if (isVisible) {
-            playerManager.setText("Player Manager");
+            playerManager.setText(lc.getString("playerManager"));
             backgroundImage.setVisible(true);
         }
     }
 
     /**
-     * Allows the admin to add money to chosen player.
-     *
-     * @param event the button click event
+     * Function to update all language fields
      */
-    @FXML
-    private void addMoney(ActionEvent event) {
-        Player selected = playerListView.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            return;
-        }
-
-        try {
-            int amount = Integer.parseInt((playerMoneyField.getText()));
-            selected.addMoneyToPlayer(amount);
-            playerMoneyField.setText(String.valueOf(selected.getPlayerMoney()));
-        } catch (NumberFormatException e) {
-            return;
-        }
-    }
-
-    /**
-     * Allows the admin to boost the tier of the player.
-     *
-     * @param event the button click event
-     */
-    @FXML
-    private void boostPlayerTier(ActionEvent event) {
-        Player selected = playerListView.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            return;
-        }
-        selected.boostPlayerTier();
-        playerTierLabel.setText("Tier: " + selected.getPlayerMoney());
-    }
-
-    /**
-     * Allows the admin to reset the players' money.
-     *
-     * @param event the button click event
-     */
-    @FXML
-    private void resetPlayerMoney(ActionEvent event) {
-        Player selected = playerListView.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            return;
-        }
-        selected.resetPlayerMoney();
-        playerMoneyField.setText("0");
-    }
-
-    @FXML
-    private void resetPlayerTier(ActionEvent event) {
-        Player selected = playerListView.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            return;
-        }
-
-        selected.resetPlayerTier();
-        playerTierLabel.setText("0");
-    }
-
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
+        designMode.setText(lc.getString("designMode"));
+        mainMenu.setText(lc.getString("mainMenu"));
+        questionManager.setText(lc.getString("questionManager"));
+        playerManager.setText(lc.getString("playerManager"));
+        questionsLabel.setText(lc.getString("questions"));
+        AddQ.setText(lc.getString("addQuestion"));
+        editQuestion.setText(lc.getString("editQuestion"));
+        saveEdits.setText(lc.getString("saveChanges"));
+        deleteQuestion.setText(lc.getString("deleteQuestion"));
+        playerManagerLabel.setText(lc.getString("playerManager"));
+        addPlayer.setText(lc.getString("addPlayer"));
+        editPlayer.setText(lc.getString("editPlayer"));
+        saveChanges.setText(lc.getString("saveChanges"));
+        deletePlayer.setText(lc.getString("deletePlayer"));
+        fileMenu.setText(lc.getString("file"));
+        configMenu.setText(lc.getString("configuration"));
+        lookFeelMenu.setText(lc.getString("lookFeel"));
+        languageMenu.setText(lc.getString("language"));
+        exitItem.setText(lc.getString("exit"));
+        settingsItem.setText(lc.getString("settings"));
+        darkItem.setText(lc.getString("dark"));
+        lightItem.setText(lc.getString("light"));
+        englishItem.setText(lc.getString("english"));
+        frenchItem.setText(lc.getString("french"));
     }
 
     @FXML private void onExitClick()  { menuBarHelper.exit(); }
     @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
-
     @FXML
     private void onENClick() {
         menuBarHelper.setEnglish();
