@@ -47,7 +47,7 @@ public class appMain extends Application {
             double width = screenBounds.getWidth() * 0.7;
             double height = screenBounds.getHeight() * 0.7;
             Scene scene = new Scene(root, width, height);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/styles.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/styles-dark.css")).toExternalForm());
 
             stage.setTitle("QMillionaire");
             stage.setScene(scene);

@@ -7,10 +7,29 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="ass2.ass2_jfx.menuController"
       VBox.vgrow="ALWAYS">
-    <fx:include source="menubar.fxml"/>
+    <MenuBar style="-fx-background-color: #3a006f;"
+             xmlns:fx="http://javafx.com/fxml">
+        <Menu text="File">
+            <MenuItem text="Exit" onAction="#onExitClick"/>
+        </Menu>
+        <Menu text="Configuration">
+            <MenuItem text="Settings"/>
+        </Menu>
+        <Menu text="Look &amp; Feel">
+            <MenuItem text="Dark" onAction="#onDarkClick"/>
+            <MenuItem text="Light" onAction="#onLightClick"/>
+        </Menu>
+        <Menu text="Language">
+            <MenuItem text="English" onAction="#onENClick"/>
+            <MenuItem text="French" onAction="#onFRClick"/>
+        </Menu>
+    </MenuBar>
 
     <StackPane VBox.vgrow="ALWAYS">
 

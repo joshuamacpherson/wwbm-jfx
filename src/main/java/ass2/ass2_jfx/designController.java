@@ -475,4 +475,24 @@ public class designController {
         selected.resetPlayerTier();
         playerTierLabel.setText("0");
     }
+
+    public void updateLanguage() {
+        languageController lc = languageController.getInstance();
+    }
+
+    @FXML private void onExitClick()  { menuBarHelper.exit(); }
+    @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    @FXML private void onLightClick() { menuBarHelper.setLight(); }
+
+    @FXML
+    private void onENClick() {
+        menuBarHelper.setEnglish();
+        updateLanguage();
+    }
+
+    @FXML
+    private void onFRClick() {
+        menuBarHelper.setFrench();
+        updateLanguage();
+    }
 }

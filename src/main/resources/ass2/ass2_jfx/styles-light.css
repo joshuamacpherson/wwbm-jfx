@@ -1,0 +1,113 @@
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #d6cee4, #a69dbc);
+}
+
+.currentTier {
+    -fx-background-color: #2d7df6;
+    -fx-background-radius: 6;
+    -fx-border-color: #5aa2ff;
+    -fx-border-radius: 6;
+    -fx-padding: 6 14 6 14;
+}
+
+#messageLabel {
+    -fx-text-fill: #1a1a2e;
+    -fx-font-size: 40px;
+}
+
+#titleLabel {
+    -fx-text-fill: #1a1a2e;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #3a006f;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-border-color: #3a006f;
+    -fx-border-radius: 8;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0.1, 0, 3);
+}
+
+.button:hover {
+    -fx-background-color: #3a006f;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0.15, 0, 5);
+}
+
+.button:pressed {
+    -fx-background-color: #2a004f;
+    -fx-text-fill: white;
+}
+
+.button.secondary {
+    -fx-background-color: rgba(0, 0, 0, 0.08);
+    -fx-text-fill: #1a1a2e;
+    -fx-border-color: transparent;
+}
+
+.button.secondary:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.14);
+}
+
+.label {
+    -fx-text-fill: #1a1a2e;
+}
+
+.list-view {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-background-radius: 8;
+    -fx-control-inner-background: #ffffff;
+}
+
+.list-cell {
+    -fx-text-fill: #1a1a2e;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a1a2e;
+    -fx-prompt-text-fill: #888888;
+    -fx-border-color: #c0c4cc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c0c4cc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.menu-bar {
+    -fx-background-color: #3a006f;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: white;
+}
+
+.context-menu {
+    -fx-background-color: #ffffff;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: #1a1a2e;
+}
+
+.side-panel {
+    -fx-background-color: #2a004f;
+    -fx-background-radius: 30;
+}
+
+.side-panel .label {
+    -fx-text-fill: white;
+}

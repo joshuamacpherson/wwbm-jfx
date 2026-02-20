@@ -23,21 +23,6 @@ public class menuController {
     @FXML private Button designButton;
 
     /**
-     * Initializes the menu screen.
-     * Sets the application language and updates button text
-     * using the languageController.
-     */
-    @FXML
-    private void initialize() {
-        playButton.setText(
-                languageController.getInstance().getString("play")
-        );
-        designButton.setText(
-                languageController.getInstance().getString("design")
-        );
-    }
-
-    /**
      * Handles the Play button click.
      * Switches the scene to the Play screen.
      *
@@ -65,5 +50,28 @@ public class menuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateLanguage() {
+        languageController lc = languageController.getInstance();
+        playButton.setText(languageController.getInstance().getString("play"));
+        designButton.setText(languageController.getInstance().getString("design")
+        );
+    }
+
+    @FXML private void onExitClick()  { menuBarHelper.exit(); }
+    @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    @FXML private void onLightClick() { menuBarHelper.setLight(); }
+
+    @FXML
+    private void onENClick() {
+        menuBarHelper.setEnglish();
+        updateLanguage();
+    }
+
+    @FXML
+    private void onFRClick() {
+        menuBarHelper.setFrench();
+        updateLanguage();
     }
 }

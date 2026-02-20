@@ -127,13 +127,8 @@ public class playController {
      */
     @FXML
     private void initialize() {
-        languageController lc = languageController.getInstance();
-        messageLabel.setText(lc.getString("timeUp"));
-        playerMoneyLabel.setText(lc.getString("playerMoney"));
-        next.setText(lc.getString("next"));
-        restart.setText(lc.getString("restart"));
-        mainMenu.setText(lc.getString("menu"));
 
+        updateLanguage();
         tiers = new Label[]{
                 tier1, tier2, tier3, tier4, tier5,
                 tier6, tier7, tier8, tier9, tier10,
@@ -162,7 +157,7 @@ public class playController {
      * Disables answer buttons when time runs out.
      */
     private void startTimer() {
-
+        languageController lc = languageController.getInstance();
         if (timer != null) timer.stop();
 
         timeLeft = 60;
@@ -174,7 +169,7 @@ public class playController {
 
             if (timeLeft <= 0) {
                 timer.stop();
-                messageLabel.setText("Time's up!");
+                messageLabel.setText(lc.getString("timeUp"));
                 A.setDisable(true);
                 B.setDisable(true);
                 C.setDisable(true);
@@ -301,6 +296,30 @@ public class playController {
         D.setText(answers[3]);
 
         startTimer();
+    }
+
+    public void updateLanguage() {
+        languageController lc = languageController.getInstance();
+        playerMoneyLabel.setText(lc.getString("playerMoney"));
+        next.setText(lc.getString("next"));
+        restart.setText(lc.getString("restart"));
+        mainMenu.setText(lc.getString("mainMenu"));
+    }
+
+    @FXML private void onExitClick()  { menuBarHelper.exit(); }
+    @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    @FXML private void onLightClick() { menuBarHelper.setLight(); }
+
+    @FXML
+    private void onENClick() {
+        menuBarHelper.setEnglish();
+        updateLanguage();
+    }
+
+    @FXML
+    private void onFRClick() {
+        menuBarHelper.setFrench();
+        updateLanguage();
     }
 }
 

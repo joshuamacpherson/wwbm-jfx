@@ -27,6 +27,7 @@ import java.util.Objects;
  */
 public class sceneController {
 
+    private String currentTheme = "/ass2/ass2_jfx/styles-dark.css";
     private static sceneController instance;
     private Stage stage; // store the stage
     private String currentFxml; // track current scene
@@ -45,8 +46,17 @@ public class sceneController {
         this.stage = stage;
     }
 
+    public void setTheme(String cssPath) {
+        this.currentTheme = cssPath;
+        if (stage != null && stage.getScene() != null) {
+            Scene scene = stage.getScene();
+            scene.getStylesheets().clear();
+            applyStyles(scene);
+        }
+    }
+
     private void applyStyles(Scene scene) {
-        URL css = getClass().getResource("/ass2/ass2_jfx/styles.css");
+        URL css = getClass().getResource(currentTheme);
         if (css != null) {
             scene.getStylesheets().add(css.toExternalForm());
         }
