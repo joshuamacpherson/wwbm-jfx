@@ -55,6 +55,8 @@ public class appMain extends Application {
             stage.setMinHeight(800);
             stage.setResizable(true);
             stage.show();
+            sceneController.getInstance().setStage(stage);
+            sceneController.getInstance().setCurrentFxml("/ass2/ass2_jfx/menu.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -26,59 +26,98 @@ import java.util.Locale;
  */
 public class playController {
 
-    @FXML private Label messageLabel;
-    @FXML private Button A;
-    @FXML private Button B;
-    @FXML private Button C;
-    @FXML private Button D;
-    @FXML private Button next;
-    @FXML private Button restart;
-    @FXML private Button mainMenu;
-    @FXML private Button langButton;
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private Button A;
+    @FXML
+    private Button B;
+    @FXML
+    private Button C;
+    @FXML
+    private Button D;
+    @FXML
+    private Button next;
+    @FXML
+    private Button restart;
+    @FXML
+    private Button mainMenu;
 
-    @FXML private Label tier1;
-    @FXML private Label tier2;
-    @FXML private Label tier3;
-    @FXML private Label tier4;
-    @FXML private Label tier5;
-    @FXML private Label tier6;
-    @FXML private Label tier7;
-    @FXML private Label tier8;
-    @FXML private Label tier9;
-    @FXML private Label tier10;
-    @FXML private Label tier11;
-    @FXML private Label tier12;
-    @FXML private Label tier13;
-    @FXML private Label tier14;
-    @FXML private Label tier15;
+    @FXML
+    private Label tier1;
+    @FXML
+    private Label tier2;
+    @FXML
+    private Label tier3;
+    @FXML
+    private Label tier4;
+    @FXML
+    private Label tier5;
+    @FXML
+    private Label tier6;
+    @FXML
+    private Label tier7;
+    @FXML
+    private Label tier8;
+    @FXML
+    private Label tier9;
+    @FXML
+    private Label tier10;
+    @FXML
+    private Label tier11;
+    @FXML
+    private Label tier12;
+    @FXML
+    private Label tier13;
+    @FXML
+    private Label tier14;
+    @FXML
+    private Label tier15;
 
-    @FXML private Label playerMoneyLabel;
-    @FXML private Label playerMoneyAmountLabel;
-    @FXML private Label timerLabel;
+    @FXML
+    private Label playerMoneyLabel;
+    @FXML
+    private Label playerMoneyAmountLabel;
+    @FXML
+    private Label timerLabel;
 
-    /** Timer used for countdown functionality. */
+    /**
+     * Timer used for countdown functionality.
+     */
     private Timeline timer;
 
-    /** Remaining time for the current question. */
+    /**
+     * Remaining time for the current question.
+     */
     private int timeLeft;
 
-    /** Maps tier labels to their corresponding prize values. */
+    /**
+     * Maps tier labels to their corresponding prize values.
+     */
     private LinkedHashMap<Label, Integer> tierMap;
 
-    /** Tracks the player's total money earned. */
+    /**
+     * Tracks the player's total money earned.
+     */
     int playerMoney = 0;
 
-    /** Array of tier labels for easier iteration. */
+    /**
+     * Array of tier labels for easier iteration.
+     */
     private Label[] tiers;
 
-    /** Current question being displayed. */
+    /**
+     * Current question being displayed.
+     */
     Question question = new Question(
             "Who's the best?",
             new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"},
             0
     );
 
-    /** Tracks the player's current prize tier index. */
+    /**
+     * Tracks the player's current prize tier index.
+     */
     int currentTier = 0;
 
     /**
@@ -94,13 +133,6 @@ public class playController {
         next.setText(lc.getString("next"));
         restart.setText(lc.getString("restart"));
         mainMenu.setText(lc.getString("menu"));
-
-        // Set language button text based on current locale
-        if (lc.getLocale().equals(Locale.ENGLISH)) {
-            langButton.setText("FR");
-        } else {
-            langButton.setText("EN");
-        }
 
         tiers = new Label[]{
                 tier1, tier2, tier3, tier4, tier5,
@@ -253,19 +285,6 @@ public class playController {
         }
     }
 
-    @FXML
-    private void toggleLang() {
-        languageController lc = languageController.getInstance();
-        if (lc.getLocale().equals(Locale.ENGLISH)) {
-            lc.setLocale(Locale.FRENCH);
-            langButton.setText("EN");
-        } else {
-            lc.setLocale(Locale.ENGLISH);
-            langButton.setText("FR");
-        }
-        initialize();
-    }
-
     /**
      * Loads a question into the UI and starts the timer.
      *
@@ -284,3 +303,4 @@ public class playController {
         startTimer();
     }
 }
+

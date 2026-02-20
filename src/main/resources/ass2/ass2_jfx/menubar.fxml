@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 
-<MenuBar style="-fx-background-color: #3a006f;">
+<MenuBar style="-fx-background-color: #3a006f;"
+         fx:controller="ass2.ass2_jfx.menuBarController"
+         xmlns:fx="http://javafx.com/fxml">
     <Menu text="File">
-        <MenuItem text="Exit"/>
+        <MenuItem text="Exit" onAction="#onExit"/>
     </Menu>
     <Menu text="Configuration">
         <MenuItem text="Settings"/>
@@ -12,7 +14,7 @@
         <MenuItem text="Default"/>
     </Menu>
     <Menu text="Language">
-        <MenuItem text="English"/>
-        <MenuItem text="French"/>
+        <MenuItem text="English" onAction="#onENClick"/>
+        <MenuItem text="French" onAction="#onFRClick"/>
     </Menu>
 </MenuBar>

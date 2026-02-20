@@ -75,3 +75,11 @@
 .list-cell {
     -fx-text-fill: white;
 }
+
+.menu-bar .menu .label {
+    -fx-text-fill: white;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: black;
+}
