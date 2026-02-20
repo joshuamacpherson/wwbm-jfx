@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 /**
  * Controller for the Design Mode screen.
  * Handles full CRUD operations for Question objects:
@@ -18,43 +19,16 @@ import java.util.ArrayList;
  */
 public class designController {
 
-    @FXML private VBox listViewContainer;
-    @FXML private VBox questionForm;
-    @FXML private VBox playerForm;
-    @FXML private TextField questionField;
-    @FXML private TextField answerA;
-    @FXML private TextField answerB;
-    @FXML private TextField answerC;
-    @FXML private TextField answerD;
+    @FXML private VBox listViewContainer, questionForm, playerForm;
+    @FXML private TextField questionField, answerA, answerB, answerC, answerD, playerNameField;
     @FXML private ComboBox<String> correctAns;
     @FXML private ListView<Question> questionListView;
-    @FXML private Button questionManager;
-    @FXML private Button playerManager;
     @FXML private ListView<Player> playerListView;
-    @FXML private TextField playerNameField;
+    @FXML private Button questionManager, playerManager, AddQ, mainMenu, editQuestion, saveEdits, deleteQuestion, addPlayer, editPlayer, saveChanges, deletePlayer;
+    @FXML private Menu fileMenu, configMenu, lookFeelMenu, languageMenu;
+    @FXML private MenuItem exitItem, settingsItem, darkItem, lightItem, englishItem, frenchItem;
+    @FXML private Label designMode, playerManagerLabel, questionsLabel;
     @FXML private ImageView backgroundImage;
-    @FXML private Button AddQ;
-    @FXML private Menu fileMenu;
-    @FXML private Menu configMenu;
-    @FXML private Menu lookFeelMenu;
-    @FXML private Menu languageMenu;
-    @FXML private MenuItem exitItem;
-    @FXML private MenuItem settingsItem;
-    @FXML private MenuItem darkItem;
-    @FXML private MenuItem lightItem;
-    @FXML private MenuItem englishItem;
-    @FXML private MenuItem frenchItem;
-    @FXML private Label designMode;
-    @FXML private Label playerManagerLabel;
-    @FXML private Button mainMenu;
-    @FXML private Button editQuestion;
-    @FXML private Button saveEdits;
-    @FXML private Button deleteQuestion;
-    @FXML private Button addPlayer;
-    @FXML private Button editPlayer;
-    @FXML private Button saveChanges;
-    @FXML private Button deletePlayer;
-    @FXML private Label questionsLabel;
 
     /**  Used for internationalization */
     languageController lc = languageController.getInstance();
@@ -230,7 +204,7 @@ public class designController {
      */
     @FXML
     private void deleteQuestion() {
-        if (questions.isEmpty()) {;
+        if (questions.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(lc.getString("noQuestions"));
             alert.setHeaderText(null);
@@ -289,7 +263,7 @@ public class designController {
      * Initializes UI components when the controller is loaded.
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         correctAns.getItems().addAll(
                 lc.getString("answerA"),
                 lc.getString("answerB"),
@@ -472,16 +446,14 @@ public class designController {
     @FXML private void onExitClick()  { menuBarHelper.exit(); }
     @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
-    @FXML
-    private void onENClick() {
+
+    @FXML private void onENClick() throws IOException {
         menuBarHelper.setEnglish();
         updateLanguage();
     }
 
-    @FXML
-    private void onFRClick() {
+    @FXML private void onFRClick() throws IOException {
         menuBarHelper.setFrench();
         updateLanguage();
     }
 }
-

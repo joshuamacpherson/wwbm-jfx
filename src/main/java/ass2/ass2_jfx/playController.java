@@ -7,11 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 
 /**
  * Controller for the Play Mode screen.
@@ -27,87 +25,22 @@ import java.util.Locale;
  */
 public class playController {
 
-    languageController lc = languageController.getInstance();
-
-    @FXML
-    private Label messageLabel;
-    @FXML
-    private Button A;
-    @FXML
-    private Button B;
-    @FXML
-    private Button C;
-    @FXML
-    private Button D;
-    @FXML
-    private Button next;
-    @FXML
-    private Button restart;
-    @FXML
-    private Button mainMenu;
-
-    @FXML
-    private Label tier1;
-    @FXML
-    private Label tier2;
-    @FXML
-    private Label tier3;
-    @FXML
-    private Label tier4;
-    @FXML
-    private Label tier5;
-    @FXML
-    private Label tier6;
-    @FXML
-    private Label tier7;
-    @FXML
-    private Label tier8;
-    @FXML
-    private Label tier9;
-    @FXML
-    private Label tier10;
-    @FXML
-    private Label tier11;
-    @FXML
-    private Label tier12;
-    @FXML
-    private Label tier13;
-    @FXML
-    private Label tier14;
-    @FXML
-    private Label tier15;
-
-    @FXML
-    private Label playerMoneyLabel;
-    @FXML
-    private Label playerMoneyAmountLabel;
-    @FXML
-    private Label timerLabel;
-
-    /**
-     * Timer used for countdown functionality.
-     */
-    private Timeline timer;
-
-    /**
-     * Remaining time for the current question.
-     */
-    private int timeLeft;
-
-    /**
-     * Maps tier labels to their corresponding prize values.
-     */
-    private LinkedHashMap<Label, Integer> tierMap;
-
-    /**
-     * Tracks the player's total money earned.
-     */
-    int playerMoney = 0;
-
-    /**
-     * Array of tier labels for easier iteration.
-     */
+    @FXML private Button next, restart, mainMenu, A, B, C, D;
+    @FXML private Label t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15,
+            messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel;
+    private final languageController lc = languageController.getInstance();
+    private Button[] answerButtons;
     private Label[] tiers;
+    private Timeline timer;
+    private int timeLeft;
+    private LinkedHashMap<Label, Integer> tierMap;
+    private int playerMoney = 0;
+    private final int[] prices = {
+            100, 200, 300, 500, 1000,
+            2000, 4000, 8000, 16000, 32000,
+            64000, 125000, 250000, 500000, 1000000
+    };
+    private int currentTier = 0;
 
     ArrayList<Question> questions = new ArrayList<Question>() {{
         add(new Question("Who is the best superhero?", new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"}, 0));
@@ -127,16 +60,6 @@ public class playController {
         add(new Question("Which country is famous for sushi?", new String[]{"China", "Japan", "Thailand", "Vietnam"}, 1));
     }};
 
-/**
-     * Current question being displayed.
-     */
-    Question question = questions.get(0);
-
-    /**
-     * Tracks the player's current prize tier index.
-     */
-    int currentTier = 0;
-
     /**
      * Initializes the Play screen.
      * Sets localization, initializes prize tiers,
@@ -144,28 +67,15 @@ public class playController {
      */
     @FXML
     private void initialize() {
-
+        answerButtons = new Button[]{A, B, C, D};
+        tiers = new Label[]{t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15};
         updateLanguage();
-        tiers = new Label[]{
-                tier1, tier2, tier3, tier4, tier5,
-                tier6, tier7, tier8, tier9, tier10,
-                tier11, tier12, tier13, tier14, tier15
-        };
-
-        int[] prices = {
-                100, 200, 300, 500, 1000,
-                2000, 4000, 8000, 16000, 32000,
-                64000, 125000, 250000, 500000, 1000000
-        };
-
         tierMap = new LinkedHashMap<>();
-
         for (int i = 0; i < tiers.length; i++) {
             tierMap.put(tiers[i], prices[i]);
             tiers[i].setText(String.format("$%,d", prices[i]));
         }
-
-        loadQuestion(question);
+        loadQuestion(questions.get(0));
         tiers[currentTier].getStyleClass().add("currentTier");
     }
 
@@ -187,10 +97,7 @@ public class playController {
             if (timeLeft <= 0) {
                 timer.stop();
                 messageLabel.setText(lc.getString("timeUp"));
-                A.setVisible(false);
-                B.setVisible(false);
-                C.setVisible(false);
-                D.setVisible(false);
+                setAnswerButtonsVisible(false);
                 mainMenu.setVisible(true);
                 restart.setVisible(true);
             }
@@ -198,11 +105,12 @@ public class playController {
 
         timer.setCycleCount(60);
         timer.play();
+    }
 
-        A.setDisable(false);
-        B.setDisable(false);
-        C.setDisable(false);
-        D.setDisable(false);
+    private void setAnswerButtonsVisible(boolean visible) {
+        for (Button btn : answerButtons) {
+            btn.setVisible(visible);
+        }
     }
 
     /**
@@ -214,43 +122,30 @@ public class playController {
      */
     @FXML
     private void onAnswerClick(ActionEvent event) {
-
         if (timer != null) timer.stop();
-
         Button clickedButton = (Button) event.getSource();
         String clickedAnswer = clickedButton.getText();
-
         if (questions.get(currentTier).isCorrect(clickedAnswer)) {
-
             if (currentTier == tiers.length - 1) {
                 messageLabel.setText(lc.getString("win"));
                 playerMoney += tierMap.get(tiers[currentTier]);
                 playerMoneyAmountLabel.setText("$" + playerMoney);
-                A.setVisible(false);
-                B.setVisible(false);
-                C.setVisible(false);
-                D.setVisible(false);
+                setAnswerButtonsVisible(false);
                 restart.setVisible(true);
                 mainMenu.setVisible(true);
                 return;
             }
-
             messageLabel.setText(lc.getString("correct"));
             playerMoney += tierMap.get(tiers[currentTier]);
             playerMoneyAmountLabel.setText("$" + playerMoney);
             next.setVisible(true);
             currentTier++;
-
         } else {
             messageLabel.setText(lc.getString("incorrect") + " " + questions.get(currentTier).getCorrectAnswer());
             restart.setVisible(true);
             mainMenu.setVisible(true);
         }
-
-        A.setVisible(false);
-        B.setVisible(false);
-        C.setVisible(false);
-        D.setVisible(false);
+        setAnswerButtonsVisible(false);
     }
 
     /**
@@ -258,16 +153,9 @@ public class playController {
      */
     @FXML
     private void onNextClick() {
-
         loadQuestion(questions.get(currentTier));
-
-        A.setVisible(true);
-        B.setVisible(true);
-        C.setVisible(true);
-        D.setVisible(true);
-
+        setAnswerButtonsVisible(true);
         next.setVisible(false);
-
         tiers[currentTier].getStyleClass().add("currentTier");
         tiers[currentTier - 1].getStyleClass().remove("currentTier");
     }
@@ -278,22 +166,14 @@ public class playController {
      */
     @FXML
     private void onRestartClick() {
-
-        A.setVisible(true);
-        B.setVisible(true);
-        C.setVisible(true);
-        D.setVisible(true);
-
+        setAnswerButtonsVisible(true);
         restart.setVisible(false);
         mainMenu.setVisible(false);
-
         playerMoney = 0;
         playerMoneyAmountLabel.setText("$" + playerMoney);
-
         tiers[currentTier].getStyleClass().remove("currentTier");
         currentTier = 0;
-
-        loadQuestion(question);
+        loadQuestion(questions.get(0));
         tiers[currentTier].getStyleClass().add("currentTier");
     }
 
@@ -321,10 +201,9 @@ public class playController {
         messageLabel.setText(q.getQuestionText());
 
         String[] answers = q.getAnswers();
-        A.setText(answers[0]);
-        B.setText(answers[1]);
-        C.setText(answers[2]);
-        D.setText(answers[3]);
+        for (int i = 0; i < answerButtons.length; i++) {
+            answerButtons[i].setText(answers[i]);
+        }
 
         startTimer();
     }
@@ -353,5 +232,4 @@ public class playController {
         updateLanguage();
     }
 }
-
 
