@@ -35,6 +35,7 @@ public class designController {
 
     @FXML
     public void initialize() {
+        for (int i = 0; i < 15; i++) questionListView.getItems().add(questions.get(i));
         correctAns.getItems().addAll(
                 lc.getString("answerA"),
                 lc.getString("answerB"),
