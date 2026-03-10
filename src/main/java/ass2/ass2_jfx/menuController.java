@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 /**
@@ -22,6 +23,8 @@ public class menuController {
     /** Button used to open Design mode. */
     @FXML private Button designButton;
 
+
+
     /**
      * Handles the Play button click.
      * Switches the scene to the Play screen.
@@ -30,6 +33,15 @@ public class menuController {
      */
     @FXML
     public void onPlayClick(ActionEvent event) {
+        if (dataStore.getInstance().getQuestions().size() < 15) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Not Enough Questions");
+            alert.setHeaderText(null);
+            alert.setContentText("You must have 15 questions to start the game!");
+            alert.show();
+            return;
+        }
+
         try {
             sceneController.getInstance().switchToPlay(event);
         } catch (IOException e) {

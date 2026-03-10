@@ -5,11 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -22,6 +25,8 @@ import java.util.ResourceBundle;
  * - Applying global styles
  */
 public class appMain extends Application {
+
+    public static boolean DEBUG = false;
 
     /**
      * Main method that launches the JavaFX application.
@@ -71,6 +76,18 @@ public class appMain extends Application {
             stage.setMinHeight(800);
             stage.setResizable(true);
             stage.show();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Debug Mode");
+            alert.setHeaderText(null);
+            alert.setContentText("Start with debug mode?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                DEBUG = true;
+            } else {
+                DEBUG = false;
+            }
 
             sceneController.getInstance().setStage(stage);
             sceneController.getInstance().setCurrentFxml("/ass2/ass2_jfx/menu.fxml");

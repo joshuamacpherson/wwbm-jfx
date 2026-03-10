@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 .root {
-    -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-background-color: linear-gradient(to bottom, #1f1c2b, #1a1623);
+    -fx-font-family: "Ubuntu", Arial, sans-serif;
+    -fx-background-color: #121212;
 }
 
 .label {
@@ -12,9 +14,9 @@
 }
 
 .currentTier {
-    -fx-background-color: #2d7df6;
+    -fx-background-color: #4a2482;
     -fx-background-radius: 6;
-    -fx-border-color: #5aa2ff;
+    -fx-border-color: #5b2ca0;
     -fx-border-radius: 6;
     -fx-padding: 6 14 6 14;
 }
@@ -31,21 +33,24 @@
 }
 
 .button {
-    -fx-background-color: linear-gradient(to bottom, #3b82f6, #2563eb);
+    -fx-background-color: rgb(41, 41, 41);
+    -fx-border-color: #4a2482;
+    -fx-border-width: 2px;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
     -fx-background-radius: 12;
+    -fx-border-radius: 12;
     -fx-padding: 10 20;
     -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(to bottom, #4f95ff, #1e5ad9);
+    -fx-background-color: linear-gradient(to bottom, #4a2482, #401f70);
 }
 
 .button:pressed {
-    -fx-background-color: #1d4ed8;
+    -fx-background-color: #4a2482;
 }
 
 .button.secondary {
@@ -104,7 +109,55 @@
 }
 
 .side-panel {
-    -fx-background-color: rgb(15,12,21);
+    -fx-background-color: rgba(255,255,255,0.05);
     -fx-background-radius: 30;
     -fx-text-fill: white;
+}
+
+.ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ubuntu-medium {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ubuntu-bold {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.ubuntu-light-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.ubuntu-regular-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ubuntu-medium-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.ubuntu-bold-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: italic;
 }

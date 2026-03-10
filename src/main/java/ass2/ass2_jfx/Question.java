@@ -80,7 +80,6 @@ public class Question {
     public boolean isCorrect(int index) {
         return index == correctIndex;
     }
-
     /**
      * Returns the question text.
      * This is used by ListView<Question> to display the question.

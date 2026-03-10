@@ -12,10 +12,7 @@ package ass2.ass2_jfx;
  * - Design Mode (CRUD management)
  * - Play Mode (gameplay logic)
  */
-public class Player {
-
-    /** The player's name. */
-    private final String name;
+public class Player extends Person {
 
     /** The total money the player has earned. */
     private int playerMoney;
@@ -30,19 +27,11 @@ public class Player {
      * @param name the player's name
      */
     public Player(String name) {
-        this.name = name;
+        super(name);
         this.playerMoney = 0;
         this.playerTier = 0;
     }
 
-    /**
-     * Returns the player's name.
-     *
-     * @return the player's name
-     */
-    public String getName() {
-        return name;
-    }
 
     /**
      * Returns the player's current money total.
@@ -92,14 +81,4 @@ public class Player {
         playerTier = 0;
     }
 
-    /**
-     * Returns the player's name.
-     * Used automatically when displayed in a ListView.
-     *
-     * @return the player's name
-     */
-    @Override
-    public String toString() {
-        return name;
-    }
 }

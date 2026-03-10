@@ -70,7 +70,7 @@ public class sceneController {
         double width = screenBounds.getWidth() * 0.7;
         double height = screenBounds.getHeight() * 0.7;
 
-        Scene scene = new Scene(root, width, height);
+        Scene scene = new Scene(root);
         applyStyles(scene);
 
         stage.setScene(scene);

@@ -1,6 +1,6 @@
 .root {
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-background-color: linear-gradient(to bottom, #d6cee4, #a69dbc);
+    -fx-background-color: white;
 }
 
 .currentTier {

@@ -28,8 +28,8 @@ public class designController {
     @FXML private ImageView backgroundImage;
 
     private final languageController lc = languageController.getInstance();
-    private final ArrayList<Question> questions = new ArrayList<>();
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final ArrayList<Question> questions = dataStore.getInstance().getQuestions();
+    private final ArrayList<Player> players = dataStore.getInstance().getPlayers();
     private Question questionBeingEdited = null;
     private Player playerBeingEdited = null;
 

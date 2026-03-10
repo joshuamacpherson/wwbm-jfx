@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class playController {
     @FXML private Button next, restart, mainMenu, A, B, C, D;
     @FXML private Label t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15,
             messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel;
+    @FXML private TextArea debugArea;
     private final languageController lc = languageController.getInstance();
     private Button[] answerButtons;
     private Label[] tiers;
@@ -41,24 +43,9 @@ public class playController {
             64000, 125000, 250000, 500000, 1000000
     };
     private int currentTier = 0;
+    private int lastRand = 1;
 
-    ArrayList<Question> questions = new ArrayList<Question>() {{
-        add(new Question("Who is the best superhero?", new String[]{"Spiderman", "Superman", "Batman", "Wonder Woman"}, 0));
-        add(new Question("What is the capital of France?", new String[]{"London", "Berlin", "Paris", "Rome"}, 2));
-        add(new Question("Which planet is known as the Red Planet?", new String[]{"Earth", "Mars", "Jupiter", "Venus"}, 1));
-        add(new Question("What is 2 + 2?", new String[]{"3", "4", "5", "6"}, 1));
-        add(new Question("Who wrote Hamlet?", new String[]{"Shakespeare", "Dickens", "Austen", "Tolkien"}, 0));
-        add(new Question("What is the largest ocean?", new String[]{"Atlantic", "Indian", "Arctic", "Pacific"}, 3));
-        add(new Question("What color do you get by mixing red and blue?", new String[]{"Green", "Purple", "Orange", "Yellow"}, 1));
-        add(new Question("Which animal is known as man's best friend?", new String[]{"Cat", "Dog", "Horse", "Rabbit"}, 1));
-        add(new Question("What is the boiling point of water?", new String[]{"90°C", "100°C", "110°C", "120°C"}, 1));
-        add(new Question("Who painted the Mona Lisa?", new String[]{"Van Gogh", "Da Vinci", "Picasso", "Rembrandt"}, 1));
-        add(new Question("What is the largest continent?", new String[]{"Africa", "Asia", "Europe", "Australia"}, 1));
-        add(new Question("What is the hardest natural substance?", new String[]{"Gold", "Iron", "Diamond", "Silver"}, 2));
-        add(new Question("Which gas do plants absorb?", new String[]{"Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"}, 1));
-        add(new Question("What is the main ingredient in bread?", new String[]{"Rice", "Wheat", "Corn", "Oats"}, 1));
-        add(new Question("Which country is famous for sushi?", new String[]{"China", "Japan", "Thailand", "Vietnam"}, 1));
-    }};
+    ArrayList<Question> questions = dataStore.getInstance().getQuestions();
 
     /**
      * Initializes the Play screen.
@@ -67,6 +54,13 @@ public class playController {
      */
     @FXML
     private void initialize() {
+
+        if (appMain.DEBUG) {
+            debugArea.setVisible(true);
+        } else {
+            debugArea.setVisible(false);
+        }
+        debugArea.appendText("Debug Area: Initialized playController\n");
         answerButtons = new Button[]{A, B, C, D};
         tiers = new Label[]{t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15};
         updateLanguage();
@@ -125,6 +119,7 @@ public class playController {
         if (timer != null) timer.stop();
         Button clickedButton = (Button) event.getSource();
         String clickedAnswer = clickedButton.getText();
+        debugArea.appendText("Clicked Answer: " + clickedAnswer + "\n");
         if (questions.get(currentTier).isCorrect(clickedAnswer)) {
             if (currentTier == tiers.length - 1) {
                 messageLabel.setText(lc.getString("win"));
@@ -137,6 +132,7 @@ public class playController {
             }
             messageLabel.setText(lc.getString("correct"));
             playerMoney += tierMap.get(tiers[currentTier]);
+            debugArea.appendText("Added " + tierMap.get(tiers[currentTier]) + " to player currency\n");
             playerMoneyAmountLabel.setText("$" + playerMoney);
             next.setVisible(true);
             currentTier++;
