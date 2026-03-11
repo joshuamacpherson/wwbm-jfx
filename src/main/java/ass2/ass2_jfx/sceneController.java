@@ -1,7 +1,6 @@
 package ass2.ass2_jfx;
 
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -11,7 +10,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -31,32 +29,20 @@ import java.util.ResourceBundle;
  */
 public class sceneController {
 
-    /**
-     * Path to the currently active CSS theme.
-     */
+    /** Path to the currently active CSS theme. */
     private String currentTheme = "/ass2/ass2_jfx/styles-dark.css";
-    /**
-     * Singleton instance of the sceneController.
-     */
+    /** Singleton instance of the sceneController. */
     private static sceneController instance;
-    /**
-     * Primary application stage.
-     */
+    /** Primary application stage. */
     private Stage stage;
-    /**
-     * Tracks the last loaded FXML file for reload operations.
-     */
+    /** Tracks the last loaded FXML file for reload operations. */
     private String currentFxml;
-
-    /**
-     * Private constructor for Singleton pattern.
-     */
+    /** Private constructor for Singleton pattern, */
     private sceneController() {
     }
 
     /**
      * Returns the Singleton instance of the sceneController.
-     *
      * @return the shared controller instance
      */
     public static sceneController getInstance() {
@@ -68,7 +54,6 @@ public class sceneController {
 
     /**
      * Sets the primary stage used for scene switching.
-     *
      * @param stage the main application stage
      */
     public void setStage(Stage stage) {
@@ -77,7 +62,6 @@ public class sceneController {
 
     /**
      * Updates the active CSS theme and reapplies it to the current scene.
-     *
      * @param cssPath path to the new stylesheet
      */
     public void setTheme(String cssPath) {
@@ -91,7 +75,6 @@ public class sceneController {
 
     /**
      * Applies the current CSS theme to the given scene.
-     *
      * @param scene the scene to style
      */
     private void applyStyles(Scene scene) {
@@ -103,7 +86,6 @@ public class sceneController {
 
     /**
      * Loads and displays the specified FXML file.
-     *
      * @param fxml the FXML resource path
      * @throws IOException if loading fails
      */
@@ -124,7 +106,6 @@ public class sceneController {
 
     /**
      * Reloads the most recently displayed FXML scene.
-     *
      * @throws IOException if loading fails
      */
     public void reloadCurrentScene() throws IOException {
@@ -135,7 +116,6 @@ public class sceneController {
 
     /**
      * Switches to the Play Mode scene.
-     *
      * @param event the triggering UI event
      * @throws IOException if loading fails
      */
@@ -146,7 +126,6 @@ public class sceneController {
 
     /**
      * Switches to the Main Menu scene.
-     *
      * @param event the triggering UI event
      * @throws IOException if loading fails
      */
@@ -157,7 +136,6 @@ public class sceneController {
 
     /**
      * Switches to the Design Mode scene.
-     *
      * @param event the triggering UI event
      * @throws IOException if loading fails
      */
@@ -166,6 +144,11 @@ public class sceneController {
         loadScene("/ass2/ass2_jfx/design.fxml");
     }
 
+    /**
+     * Retrieves and stores the window (Stage) from the event source
+     * if it has not already been set.
+     * @param event the action event triggered by a UI control
+     */
     private void grabStageFromEvent(ActionEvent event) {
         if (stage == null) {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -174,7 +157,6 @@ public class sceneController {
 
     /**
      * Manually sets the current FXML path for reload operations.
-     *
      * @param fxml the FXML resource path
      */
     public void setCurrentFxml(String fxml) {
@@ -185,7 +167,6 @@ public class sceneController {
      * Shows the splash screen and switches to the main menu after a delay.
      * Loads splash.fxml, applies styles, displays it on the primary stage,
      * then uses a timed transition to load the main menu scene.
-     *
      * @throws IOException if the splash FXML cannot be loaded
      */
     public void showSplash() throws IOException {

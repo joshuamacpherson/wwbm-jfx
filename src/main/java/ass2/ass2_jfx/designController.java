@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,7 +17,6 @@ import java.util.ArrayList;
  * - Deleting questions
  */
 public class designController {
-
     @FXML private VBox listViewContainer, questionForm, playerForm;
     @FXML private TextField questionField, answerA, answerB, answerC, answerD, playerNameField;
     @FXML private ComboBox<String> correctAns;
@@ -46,7 +44,6 @@ public class designController {
 
     /**
      * Switches back to the main menu scene.
-     *
      * @param event the button click event
      */
     @FXML
@@ -58,9 +55,7 @@ public class designController {
         }
     }
 
-    /**
-     * Adds a new question to the list after validating input fields.
-     */
+    /** Adds a new question to the list after validating input fields. */
     @FXML
     private void addQuestion() {
         String question = questionField.getText();
@@ -106,9 +101,7 @@ public class designController {
         success.showAndWait();
     }
 
-    /**
-     * Loads the selected question into the form fields for editing.
-     */
+    /** Loads the selected question into the form fields for editing. */
     @FXML
     private void editQuestion() {
         Question selected =
@@ -147,9 +140,7 @@ public class designController {
         alert.showAndWait();
     }
 
-    /**
-     * Saves changes made to the currently edited question.
-     */
+    /** Saves changes made to the currently edited question. */
     @FXML
     private void saveEditedQuestion() {
         if (questionBeingEdited == null) return;
@@ -198,9 +189,7 @@ public class designController {
         alert.showAndWait();
     }
 
-    /**
-     * Deletes the selected question after confirmation.
-     */
+    /** Deletes the selected question after confirmation. */
     @FXML
     private void deleteQuestion() {
         if (questions.isEmpty()) {
@@ -241,9 +230,7 @@ public class designController {
         }
     }
 
-    /**
-     * Allows the admin to add a player to the game.
-     */
+    /** Allows the admin to add a player to the game. */
     @FXML
     private void addPlayer() {
         String name = playerNameField.getText();
@@ -265,9 +252,7 @@ public class designController {
         playerNameField.clear();
     }
 
-    /**
-     * Allows the admin to edit an added player in the game.
-     */
+    /** Allows the admin to edit an added player in the game. */
     @FXML
     private void editPlayer() {
         Player selected =
@@ -286,9 +271,7 @@ public class designController {
         playerNameField.setText(selected.getName());
     }
 
-    /**
-     * Allows the admin to save an edited player in the game.
-     */
+    /** Allows the admin to save an edited player in the game. */
     @FXML
     private void saveEditedPlayer() {
         if (playerBeingEdited == null) return;
@@ -321,9 +304,7 @@ public class designController {
         alert.showAndWait();
     }
 
-    /**
-     * Allows the admin to delete a player from the game.
-     */
+    /** Allows the admin to delete a player from the game. */
     @FXML
     private void deletePlayer() {
         Player selected =
@@ -353,9 +334,7 @@ public class designController {
         }
     }
 
-    /**
-     * Toggles visibility between the question form and the list view.
-     */
+    /** Toggles visibility between the question form and the list view. */
     @FXML
     private void showQuestionForm() {
         boolean isQuestionFormVisible = questionForm.isVisible();
@@ -408,16 +387,27 @@ public class designController {
         }
     }
 
+    /** Exits the game. */
     @FXML private void onExitClick()  { menuBarHelper.exit(); }
+    /** Switches the UI to dark mode. */
     @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    /** Switches the UI to light mode. */
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
 
+    /**
+     * Switches the language to English and reloads the scene.
+     * @throws IOException if the scene fails to reload
+     */
     @FXML
     private void onENClick() throws IOException {
         menuBarHelper.setEnglish();
         sceneController.getInstance().reloadCurrentScene();
     }
 
+    /**
+     * Switches the language to French and reloads the scene.
+     * @throws IOException if the scene fails to reload
+     */
     @FXML
     private void onFRClick() throws IOException {
         menuBarHelper.setFrench();

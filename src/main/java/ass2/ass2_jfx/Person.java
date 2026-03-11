@@ -1,11 +1,12 @@
 package ass2.ass2_jfx;
+
 /**
  * Basic entity representing a person with a name.
  */
 public class Person {
 
     /** The person's name. */
-    private String name;
+    private final String name;
 
     /**
      * Creates a new Person.

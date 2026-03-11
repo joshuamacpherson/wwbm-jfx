@@ -111,3 +111,7 @@
 .side-panel .label {
     -fx-text-fill: white;
 }
+
+#playerImageView {
+    -fx-background-color: red;
+}

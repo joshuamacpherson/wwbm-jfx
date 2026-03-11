@@ -3,7 +3,6 @@ package ass2.ass2_jfx;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -28,7 +27,6 @@ public class menuController {
     /**
      * Handles the Play button click.
      * Switches the scene to the Play screen.
-     *
      * @param event the button click event
      */
     @FXML
@@ -68,7 +66,6 @@ public class menuController {
     /**
      * Handles the Design button click.
      * Switches the scene to the Design screen.
-     *
      * @param event the button click event
      */
     @FXML
@@ -80,9 +77,7 @@ public class menuController {
         }
     }
 
-    /**
-     * Updates all UI text based on the currently selected language.
-     */
+    /** Updates all UI text based on the currently selected language. */
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
         playButton.setText(lc.getString("play"));

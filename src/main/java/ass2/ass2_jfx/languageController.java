@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 /**
  * Manages application localization and language settings.
- *
  * This class follows the Singleton pattern to ensure that
  * only one languageController instance exists.
  *
@@ -36,7 +35,6 @@ public class languageController {
 
     /**
      * Returns the singleton instance of languageController.
-     *
      * @return the single languageController instance
      */
     public static languageController getInstance() {
@@ -46,16 +44,13 @@ public class languageController {
         return instance;
     }
 
-    /**
-     * Loads the ResourceBundle corresponding to the current locale.
-     */
+    /** Loads the ResourceBundle corresponding to the current locale. */
     private void loadBundle() {
         bundle = ResourceBundle.getBundle("ass2.ass2_jfx.QMillionaire", locale);
     }
 
     /**
      * Sets the application locale and reloads the resource bundle.
-     *
      * @param locale the new locale to apply
      */
     public void setLocale(Locale locale) {
@@ -65,7 +60,6 @@ public class languageController {
 
     /**
      * Returns the currently selected application locale.
-     *
      * @return the active Locale
      */
     public Locale getLocale() {
@@ -74,7 +68,6 @@ public class languageController {
 
     /**
      * Retrieves a localized string from the resource bundle.
-     *
      * @param key the key associated with the desired string
      * @return the localized string corresponding to the key
      */

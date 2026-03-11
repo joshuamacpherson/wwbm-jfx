@@ -4,13 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * Controller for the Play Mode screen.
@@ -25,11 +26,12 @@ import java.util.LinkedHashMap;
  * - Navigating back to the main menu
  */
 public class playController {
-
-    @FXML private Button next, restart, mainMenu, A, B, C, D;
+    @FXML private Button next, restart, mainMenu, A, B, C, D, fiftyFifty, phoneAFriend, askTheAudience;
     @FXML private Label t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15,
             messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel, playerNameLabel;
     @FXML private TextArea debugArea;
+    @FXML private ImageView playerImageView;
+
     private final languageController lc = languageController.getInstance();
     private Button[] answerButtons;
     private Label[] tiers;
@@ -37,13 +39,19 @@ public class playController {
     private int timeLeft;
     private LinkedHashMap<Label, Integer> tierMap;
     private int playerMoney = 0;
+
     private final int[] prices = {
             100, 200, 300, 500, 1000,
             2000, 4000, 8000, 16000, 32000,
             64000, 125000, 250000, 500000, 1000000
     };
+
     private int currentTier = 0;
     private int lastRand = 1;
+    private boolean superpositionUsed = false;
+    private boolean entanglementUsed = false;
+    private boolean interferenceUsed = false;
+    private int entangledIndex = -1;
 
     ArrayList<Question> questions = dataStore.getInstance().getQuestions();
 
@@ -111,7 +119,6 @@ public class playController {
 
     /**
      * Shows or hides all answer buttons at once.
-     *
      * @param visible true to display the buttons, false to hide them
      */
     private void setAnswerButtonsVisible(boolean visible) {
@@ -124,7 +131,6 @@ public class playController {
      * Handles answer button clicks.
      * Determines correctness, updates money and tier,
      * and controls UI visibility.
-     *
      * @param event the button click event
      */
     @FXML
@@ -159,9 +165,7 @@ public class playController {
         setAnswerButtonsVisible(false);
     }
 
-    /**
-     * Loads the next question and advances the tier highlight.
-     */
+    /** Loads the next question and advances the tier highlight. */
     @FXML
     private void onNextClick() {
         loadQuestion(questions.get(currentTier));
@@ -187,14 +191,23 @@ public class playController {
         loadQuestion(questions.get(0));
         tiers[currentTier].getStyleClass().add("currentTier");
 
+        // reset player
         Player p = dataStore.getInstance().getCurrentPlayer();
         p.resetPlayerMoney();
         p.resetPlayerTier();
+
+        // reset lifelines
+        superpositionUsed = false;
+        entanglementUsed = false;
+        interferenceUsed = false;
+        entangledIndex = -1;
+        fiftyFifty.setDisable(false);
+        phoneAFriend.setDisable(false);
+        askTheAudience.setDisable(false);
     }
 
     /**
      * Returns the user to the main menu screen.
-     *
      * @param event the button click event
      */
     @FXML
@@ -208,7 +221,6 @@ public class playController {
 
     /**
      * Loads a question into the UI and starts the timer.
-     *
      * @param q the Question to display
      */
     private void loadQuestion(Question q) {
@@ -217,13 +229,114 @@ public class playController {
 
         for (int i = 0; i < answerButtons.length; i++) {
             answerButtons[i].setText(answers[i]);
+            answerButtons[i].setDisable(false);
+            answerButtons[i].setStyle("");
         }
+        entangledIndex = -1;
         startTimer();
     }
 
-    /*
-     * Need this to update UI or gamestate is lost
+    /**
+     * Removes two incorrect answers at random.
+     * Disables the eliminated buttons and locks the lifeline.
      */
+    @FXML
+    private void useSuperposition() {
+        if (superpositionUsed) {
+            return;
+        }
+
+        Question q = questions.get(currentTier);
+        ArrayList<Integer> wrong = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            if (!q.isCorrect(i)) {
+                wrong.add(i);
+            }
+        }
+
+        Collections.shuffle(wrong);
+        answerButtons[wrong.get(0)].setDisable(true);
+        answerButtons[wrong.get(1)].setDisable(true);
+        superpositionUsed = true;
+        fiftyFifty.setDisable(true);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Superposition Activated!");
+        alert.setHeaderText(null);
+        alert.setContentText("Two incorrect answers have been removed!");
+        alert.showAndWait();
+    }
+
+    /**
+     * Highlights the correct answer and guarantees the player
+     * will be marked correct on their next selection.
+     */
+    @FXML
+    private void useEntanglement() {
+        if (entanglementUsed){
+            return;
+        }
+
+        Question q = questions.get(currentTier);
+        for (int i = 0; i < 4; i++) {
+            String answerText = answerButtons[i].getText();
+            if (q.isCorrect(answerText)) {
+                entangledIndex = i;
+                answerButtons[i].setStyle("-fx-background-color: green;");
+                break;
+            }
+        }
+
+        entanglementUsed = true;
+        phoneAFriend.setDisable(true);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Entanglement Activated!");
+        alert.setHeaderText(null);
+        alert.setContentText("Your friend thinks this is the answer!.");
+        alert.showAndWait();
+    }
+
+    /**
+     * Highlights a suggested answer. If Entanglement was used,
+     * Interference will reinforce the same correct answer.
+     */
+    @FXML
+    private void useInterference() {
+        if (interferenceUsed) {
+            return;
+        }
+
+        Random rand = new Random();
+        Question q = questions.get(currentTier);
+        int index = 0;
+
+        if (rand.nextDouble() < 0.5) {
+            for (int i = 0; i < 4; i++) {
+                if (q.isCorrect(i)) {
+                    index = i;
+                    answerButtons[index].setStyle("-fx-background-color: green;");
+                    break;
+                }
+            }
+        } else {
+            // random answer
+            index = rand.nextInt(4);
+            answerButtons[index].setStyle("-fx-background-color: green;");
+        }
+        interferenceUsed = true;
+        askTheAudience.setDisable(true);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Interference Activated!");
+        alert.setHeaderText(null);
+        alert.setContentText("The audience thinks this is the answer!.");
+        alert.showAndWait();
+
+    }
+
+    /** Need this to update UI or game-state is lost. */
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
         playerMoneyLabel.setText(lc.getString("playerMoney"));

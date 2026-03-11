@@ -64,9 +64,11 @@
                     <Label fx:id="playerNameLabel"
                            text="Player"
                            style="-fx-font-size: 24px;"/>
+
                     <Label fx:id="playerMoneyLabel"
                            text="%playerMoney"
                            style="-fx-font-size: 24px;"/>
+
                     <Label fx:id="playerMoneyAmountLabel"
                            text="\$0"
                            style="-fx-font-size: 24px;"/>
@@ -81,15 +83,15 @@
                         <Button fx:id="fiftyFifty" text="Superposition"
                                 style="-fx-font-size: 18px;"
                                 prefWidth="200" prefHeight="50"
-                                />
+                                onAction="#useSuperposition"/>
                         <Button fx:id="phoneAFriend" text="Entanglement"
                                 style="-fx-font-size: 18px;"
                                 prefWidth="200" prefHeight="50"
-                                />
+                                onAction="#useEntanglement"/>
                         <Button fx:id="askTheAudience" text="Interference"
                                 style="-fx-font-size: 18px;"
                                 prefWidth="200" prefHeight="50"
-                                />
+                                onAction="#useInterference"/>
                     </VBox>
                 </VBox>
             </left>

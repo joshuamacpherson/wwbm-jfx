@@ -1,6 +1,7 @@
 package ass2.ass2_jfx;
 
 import javafx.application.Platform;
+
 /**
  * Utility class for handling menu bar actions such as
  * exiting the app, switching themes, and changing languages.

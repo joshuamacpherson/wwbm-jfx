@@ -43,46 +43,37 @@ public class Player extends Person {
 
     /**
      * Adds the specified amount of money to the player.
-     *
      * @param amount the amount of money to add
      */
     public void addMoneyToPlayer(int amount) {
         this.playerMoney += amount;
     }
 
-    /**
-     * Resets the player's money to zero.
-     */
+    /** Resets the player's money to zero. */
     public void resetPlayerMoney() {
         this.playerMoney = 0;
     }
 
     /**
      * Returns the player's current tier level.
-     *
      * @return the player's tier
      */
     public int getPlayerTier() {
         return playerTier;
     }
 
-    /**
-     * Advances the player to the next tier level.
-     */
+    /** Advances the player to the next tier level. */
     public void boostPlayerTier() {
         playerTier++;
     }
 
-    /**
-     * Resets the player's tier level to zero.
-     */
+    /** Resets the player's tier level to zero. */
     public void resetPlayerTier() {
         playerTier = 0;
     }
 
     /**
-     * Returns the player's name for display purposes.
-     *
+     * Returns the player's name for display purposes.S
      * @return the player's name
      */
     @Override

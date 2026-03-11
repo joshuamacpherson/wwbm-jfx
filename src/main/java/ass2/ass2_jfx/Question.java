@@ -23,7 +23,6 @@ public class Question {
 
     /**
      * Constructs a new Question.
-     *
      * @param questionText the text of the question
      * @param answers an array containing the possible answer choices
      * @param correctIndex the index of the correct answer in the array
@@ -36,7 +35,6 @@ public class Question {
 
     /**
      * Returns the question text.
-     *
      * @return the question text
      */
     public String getQuestionText() {
@@ -45,7 +43,6 @@ public class Question {
 
     /**
      * Returns the array of answer choices.
-     *
      * @return the array of answers
      */
     public String[] getAnswers() {
@@ -54,7 +51,6 @@ public class Question {
 
     /**
      * Returns the correct answer as a String.
-     *
      * @return the correct answer
      */
     public String getCorrectAnswer() {
@@ -63,7 +59,6 @@ public class Question {
 
     /**
      * Checks whether the provided answer text is correct.
-     *
      * @param answer the answer text to check
      * @return true if the answer matches the correct answer; false otherwise
      */
@@ -73,7 +68,6 @@ public class Question {
 
     /**
      * Checks whether the provided index matches the correct answer index.
-     *
      * @param index the index to check
      * @return true if the index matches the correct answer index; false otherwise
      */
@@ -84,7 +78,6 @@ public class Question {
     /**
      * Returns the question text.
      * This is used by ListView<Question> to display the question.
-     *
      * @return the question text
      */
     @Override
