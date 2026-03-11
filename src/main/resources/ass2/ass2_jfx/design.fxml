@@ -82,7 +82,7 @@
                             onAction="#addQuestion"/>
                     <Button text="%editQuestion"
                             onAction="#editQuestion"/>
-                    <Button text="%saveChanges"
+                    <Button text="%saveEdits"
                             onAction="#saveEditedQuestion"/>
                     <Button text="%deleteQuestion"
                             onAction="#deleteQuestion"/>
@@ -104,7 +104,7 @@
                             onAction="#addPlayer"/>
                     <Button text="%editPlayer" maxWidth="200"
                             onAction="#editPlayer"/>
-                    <Button text="%saveChanges" maxWidth="200"
+                    <Button text="%saveEdits" maxWidth="200"
                             onAction="#saveEditedPlayer"/>
                     <Button text="%deletePlayer" maxWidth="200"
                             onAction="#deletePlayer"/>

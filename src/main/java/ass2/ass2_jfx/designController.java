@@ -303,8 +303,8 @@ public class designController {
             alert.showAndWait();
             return;
         }
-        int ind = dataStore.getInstance().getPlayers().indexOf(playerBeingEdited);
 
+        int ind = playerListView.getSelectionModel().getSelectedIndex();
         Player updated = new Player(name);
         dataStore.getInstance().getPlayers().set(ind, updated);
 
@@ -313,8 +313,13 @@ public class designController {
         playerBeingEdited = null;
         playerNameField.clear();
         playerListView.getSelectionModel().clearSelection();
-    }
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Player updated successfully.");
+        alert.showAndWait();
+    }
 
     /**
      * Allows the admin to delete a player from the game.
