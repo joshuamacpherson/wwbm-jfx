@@ -1,14 +1,26 @@
 package ass2.ass2_jfx;
 
 import java.util.ArrayList;
-
+/**
+ * Central in‑memory storage for all game data.
+ * Implements a Singleton to ensure a single shared source of truth
+ * for questions, players, and the currently selected player.
+ */
 public class dataStore {
 
+    /** Singleton instance of the dataStore. */
     private static dataStore instance;
-
+    /** The player currently selected for Play Mode. */
+    private Player currentPlayer;
+    /** List of all predefined and user‑added questions. */
     private final ArrayList<Question> questions = new ArrayList<>();
+    /** List of all players available in Design and Play modes. */
     private final ArrayList<Player> players = new ArrayList<>();
 
+    /**
+     * Initializes the datastore with default questions
+     * and one permanent built‑in player.
+     */
     private dataStore() {
         questions.add(new Question("What is the capital of France?",
                 new String[]{"Berlin", "Madrid", "Paris", "Rome"}, 2));
@@ -40,15 +52,40 @@ public class dataStore {
                 new String[]{"Helium", "Oxygen", "Hydrogen", "Carbon"}, 2));
         questions.add(new Question("What year did World War II end?",
                 new String[]{"1943", "1944", "1946", "1945"}, 3));
+
+        players.add(new Player("Default Player"));
     }
 
+    /**
+     * Returns the Singleton instance of the datastore.
+     * @return the shared dataStore instance
+     */
     public static dataStore getInstance() {
-        if (instance == null) {
-            instance = new dataStore();
-        }
+        if (instance == null) instance = new dataStore();
         return instance;
     }
 
+    /**
+     * Returns the list of all questions.
+     * @return the question list
+     */
     public ArrayList<Question> getQuestions() { return questions; }
+
+    /**
+     * Returns the list of all players.
+     * @return the player list
+     */
     public ArrayList<Player> getPlayers() { return players; }
+
+    /**
+     * Returns the currently selected player.
+     * @return the active player
+     */
+    public Player getCurrentPlayer() { return currentPlayer; }
+
+    /**
+     * Sets the player to be used in Play Mode.
+     * @param player the selected player
+     */
+    public void setCurrentPlayer(Player player) { this.currentPlayer = player; }
 }

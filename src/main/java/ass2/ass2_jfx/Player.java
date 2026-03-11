@@ -32,7 +32,6 @@ public class Player extends Person {
         this.playerTier = 0;
     }
 
-
     /**
      * Returns the player's current money total.
      *
@@ -81,4 +80,13 @@ public class Player extends Person {
         playerTier = 0;
     }
 
+    /**
+     * Returns the player's name for display purposes.
+     *
+     * @return the player's name
+     */
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

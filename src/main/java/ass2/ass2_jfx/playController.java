@@ -28,7 +28,7 @@ public class playController {
 
     @FXML private Button next, restart, mainMenu, A, B, C, D;
     @FXML private Label t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15,
-            messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel;
+            messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel, playerNameLabel;
     @FXML private TextArea debugArea;
     private final languageController lc = languageController.getInstance();
     private Button[] answerButtons;
@@ -71,6 +71,14 @@ public class playController {
         }
         loadQuestion(questions.get(0));
         tiers[currentTier].getStyleClass().add("currentTier");
+
+        Player currentPlayer = dataStore.getInstance().getCurrentPlayer();
+        playerNameLabel.setText(dataStore.getInstance().getCurrentPlayer().getName());
+
+        if (currentPlayer != null) {
+            playerMoney = currentPlayer.getPlayerMoney();
+            playerMoneyAmountLabel.setText("$" + playerMoney);
+        }
     }
 
     /**
@@ -101,6 +109,11 @@ public class playController {
         timer.play();
     }
 
+    /**
+     * Shows or hides all answer buttons at once.
+     *
+     * @param visible true to display the buttons, false to hide them
+     */
     private void setAnswerButtonsVisible(boolean visible) {
         for (Button btn : answerButtons) {
             btn.setVisible(visible);
@@ -123,7 +136,9 @@ public class playController {
         if (questions.get(currentTier).isCorrect(clickedAnswer)) {
             if (currentTier == tiers.length - 1) {
                 messageLabel.setText(lc.getString("win"));
-                playerMoney += tierMap.get(tiers[currentTier]);
+                playerMoney += tierMap.get(tiers[currentTier]);Player p = dataStore.getInstance().getCurrentPlayer();
+                p.addMoneyToPlayer(tierMap.get(tiers[currentTier]));
+                playerMoney = p.getPlayerMoney();
                 playerMoneyAmountLabel.setText("$" + playerMoney);
                 setAnswerButtonsVisible(false);
                 restart.setVisible(true);
@@ -171,6 +186,10 @@ public class playController {
         currentTier = 0;
         loadQuestion(questions.get(0));
         tiers[currentTier].getStyleClass().add("currentTier");
+
+        Player p = dataStore.getInstance().getCurrentPlayer();
+        p.resetPlayerMoney();
+        p.resetPlayerTier();
     }
 
     /**
@@ -193,19 +212,17 @@ public class playController {
      * @param q the Question to display
      */
     private void loadQuestion(Question q) {
-
         messageLabel.setText(q.getQuestionText());
-
         String[] answers = q.getAnswers();
+
         for (int i = 0; i < answerButtons.length; i++) {
             answerButtons[i].setText(answers[i]);
         }
-
         startTimer();
     }
 
     /*
-     * need this to update UI or gamestate is lost
+     * Need this to update UI or gamestate is lost
      */
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
@@ -215,20 +232,14 @@ public class playController {
         mainMenu.setText(lc.getString("mainMenu"));
     }
 
+    /** Exits the application. */
     @FXML private void onExitClick()  { menuBarHelper.exit(); }
+    /** Switches to dark theme. */
     @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    /** Switches to light theme. */
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
-
-    @FXML
-    private void onENClick() {
-        menuBarHelper.setEnglish();
-        updateLanguage();
-    }
-
-    @FXML
-    private void onFRClick() {
-        menuBarHelper.setFrench();
-        updateLanguage();
-    }
+    /** Sets language to English and refreshes UI text. */
+    @FXML private void onENClick() {menuBarHelper.setEnglish();updateLanguage();}
+    /** Sets language to French and refreshes UI text. */
+    @FXML private void onFRClick() {menuBarHelper.setFrench();updateLanguage();}
 }
-

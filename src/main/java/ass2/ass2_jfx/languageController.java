@@ -63,6 +63,11 @@ public class languageController {
         loadBundle();
     }
 
+    /**
+     * Returns the currently selected application locale.
+     *
+     * @return the active Locale
+     */
     public Locale getLocale() {
         return this.locale;
     }

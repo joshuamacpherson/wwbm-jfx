@@ -1,15 +1,17 @@
 package ass2.ass2_jfx;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 
 /**
  * Controller for the Main Menu screen.
- *
  * Responsibilities:
  * - Initializing localized button text
  * - Handling navigation to Play mode
@@ -23,8 +25,6 @@ public class menuController {
     /** Button used to open Design mode. */
     @FXML private Button designButton;
 
-
-
     /**
      * Handles the Play button click.
      * Switches the scene to the Play screen.
@@ -32,7 +32,7 @@ public class menuController {
      * @param event the button click event
      */
     @FXML
-    public void onPlayClick(ActionEvent event) {
+    public void onPlayClick(ActionEvent event) throws IOException {
         if (dataStore.getInstance().getQuestions().size() < 15) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Not Enough Questions");
@@ -42,10 +42,26 @@ public class menuController {
             return;
         }
 
-        try {
+        ArrayList<Player> players = dataStore.getInstance().getPlayers();
+
+        if (players.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Players Exist");
+            alert.setHeaderText(null);
+            alert.setContentText("Please Create a Player in Design Mode First.");
+            alert.show();
+            return;
+        }
+
+        ChoiceDialog<Player> dialog = new ChoiceDialog<>(players.get(0), players);
+        dialog.setTitle("Select Player");
+        dialog.setHeaderText("Choose a player");
+        dialog.setContentText("Player: ");
+        Optional<Player> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            dataStore.getInstance().setCurrentPlayer(result.get());
             sceneController.getInstance().switchToPlay(event);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -64,26 +80,23 @@ public class menuController {
         }
     }
 
+    /**
+     * Updates all UI text based on the currently selected language.
+     */
     public void updateLanguage() {
         languageController lc = languageController.getInstance();
         playButton.setText(lc.getString("play"));
-        designButton.setText(lc.getString("design")
-        );
+        designButton.setText(lc.getString("design"));
     }
 
-    @FXML private void onExitClick()  { menuBarHelper.exit(); }
-    @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
+    /** Exits the application. */
+    @FXML private void onExitClick() { menuBarHelper.exit(); }
+    /** Applies the dark theme. */
+    @FXML private void onDarkClick() { menuBarHelper.setDark(); }
+    /** Applies the light theme. */
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
-
-    @FXML
-    private void onENClick() {
-        menuBarHelper.setEnglish();
-        updateLanguage();
-    }
-
-    @FXML
-    private void onFRClick() {
-        menuBarHelper.setFrench();
-        updateLanguage();
-    }
+    /** Switches the language to English and refreshes UI text. */
+    @FXML private void onENClick() {menuBarHelper.setEnglish();updateLanguage();}
+    /** Switches the language to French and refreshes UI text. */
+    @FXML private void onFRClick() {menuBarHelper.setFrench();updateLanguage();}
 }

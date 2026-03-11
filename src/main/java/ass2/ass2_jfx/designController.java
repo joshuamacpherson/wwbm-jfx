@@ -260,7 +260,7 @@ public class designController {
         }
 
         Player player = new Player(name);
-        players.add(player);
+        dataStore.getInstance().getPlayers().add(player);
         playerListView.getItems().add(player);
         playerNameField.clear();
     }
@@ -299,21 +299,22 @@ public class designController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("enterPlayerNamePrompt")
-            );
+            alert.setContentText(lc.getString("enterPlayerNamePrompt"));
             alert.showAndWait();
             return;
         }
+        int ind = dataStore.getInstance().getPlayers().indexOf(playerBeingEdited);
 
-        int ind = players.indexOf(playerBeingEdited);
         Player updated = new Player(name);
-        players.set(ind, updated);
+        dataStore.getInstance().getPlayers().set(ind, updated);
+
         playerListView.getItems().set(ind, updated);
+
         playerBeingEdited = null;
         playerNameField.clear();
         playerListView.getSelectionModel().clearSelection();
     }
+
 
     /**
      * Allows the admin to delete a player from the game.
@@ -342,7 +343,7 @@ public class designController {
         );
 
         if (confirm.showAndWait().get() == ButtonType.OK) {
-            players.remove(selected);
+            dataStore.getInstance().getPlayers().remove(selected);
             playerListView.getItems().remove(selected);
         }
     }

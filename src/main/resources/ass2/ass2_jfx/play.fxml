@@ -61,6 +61,9 @@
                                 right="10.0"/>
                     </padding>
 
+                    <Label fx:id="playerNameLabel"
+                           text="Player"
+                           style="-fx-font-size: 24px;"/>
                     <Label fx:id="playerMoneyLabel"
                            text="%playerMoney"
                            style="-fx-font-size: 24px;"/>
