@@ -39,7 +39,7 @@ public class appMain extends Application {
         try {
             sceneController sc = sceneController.getInstance();
             sc.setStage(stage);
-            sc.splishSplash();
+            sc.showSplash();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class appMain extends Application {
      *
      * @param stage the primary stage
      */
-    private void loadMainMenu(Stage stage) {
+    public void loadMainMenu(Stage stage) {
         try {
             ResourceBundle bundle = ResourceBundle.getBundle(
                     "ass2.ass2_jfx.QMillionaire",

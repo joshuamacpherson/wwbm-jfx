@@ -188,7 +188,7 @@ public class sceneController {
      *
      * @throws IOException if the splash FXML cannot be loaded
      */
-    public void splishSplash() throws IOException {
+    public void showSplash() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ass2/ass2_jfx/splash.fxml")));
 
         Scene scene = new Scene(root);
@@ -198,11 +198,8 @@ public class sceneController {
 
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> {
-            try {
-                loadScene("/ass2/ass2_jfx/menu.fxml");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            appMain app = new appMain();
+            app.loadMainMenu(stage);
         });
         delay.play();
     }
