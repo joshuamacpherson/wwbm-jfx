@@ -136,9 +136,11 @@ public class playController {
     @FXML
     private void onAnswerClick(ActionEvent event) {
         if (timer != null) timer.stop();
+
         Button clickedButton = (Button) event.getSource();
         String clickedAnswer = clickedButton.getText();
         debugArea.appendText("Clicked Answer: " + clickedAnswer + "\n");
+
         if (questions.get(currentTier).isCorrect(clickedAnswer)) {
             if (currentTier == tiers.length - 1) {
                 messageLabel.setText(lc.getString("win"));

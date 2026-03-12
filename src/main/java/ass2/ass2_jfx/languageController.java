@@ -14,13 +14,10 @@ import java.util.ResourceBundle;
  * - Providing localized strings by key
  */
 public class languageController {
-
     /** Singleton instance of languageController. */
     private static languageController instance;
-
     /** The currently selected locale. */
     private Locale locale;
-
     /** Resource bundle containing localized strings. */
     private ResourceBundle bundle;
 
