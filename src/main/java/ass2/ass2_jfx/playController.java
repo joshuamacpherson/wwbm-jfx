@@ -38,7 +38,7 @@ public class playController {
     private Timeline timer;
     private int timeLeft;
     private LinkedHashMap<Label, Integer> tierMap;
-    private int playerMoney = 0;
+    private int playerMoney;
 
     private final int[] prices = {
             100, 200, 300, 500, 1000,
@@ -47,7 +47,6 @@ public class playController {
     };
 
     private int currentTier = 0;
-    private int lastRand = 1;
     private boolean superpositionUsed = false;
     private boolean entanglementUsed = false;
     private boolean interferenceUsed = false;
@@ -186,7 +185,6 @@ public class playController {
         setAnswerButtonsVisible(true);
         restart.setVisible(false);
         mainMenu.setVisible(false);
-        playerMoney = 0;
         playerMoneyAmountLabel.setText("$" + playerMoney);
         tiers[currentTier].getStyleClass().remove("currentTier");
         currentTier = 0;
@@ -195,7 +193,7 @@ public class playController {
 
         // reset player
         Player p = dataStore.getInstance().getCurrentPlayer();
-        p.resetPlayerMoney();
+        p.setPlayerMoney(playerMoney);
         p.resetPlayerTier();
 
         // reset lifelines
@@ -214,6 +212,8 @@ public class playController {
      */
     @FXML
     private void onMainMenuClick(ActionEvent event) {
+        Player p = dataStore.getInstance().getCurrentPlayer();
+        p.setPlayerMoney(playerMoney);
         try {
             sceneController.getInstance().switchToMenu(event);
         } catch (IOException e) {

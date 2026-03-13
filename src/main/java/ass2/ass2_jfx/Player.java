@@ -41,6 +41,10 @@ public class Player extends Person {
         return playerMoney;
     }
 
+    public void setPlayerMoney(int amount) {
+        playerMoney = amount;
+    }
+
     /**
      * Adds the specified amount of money to the player.
      * @param amount the amount of money to add
