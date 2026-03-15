@@ -5,6 +5,10 @@ import javafx.application.Platform;
 /**
  * Utility class for handling menu bar actions such as
  * exiting the app, switching themes, and changing languages.
+ *
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class menuBarHelper {
 

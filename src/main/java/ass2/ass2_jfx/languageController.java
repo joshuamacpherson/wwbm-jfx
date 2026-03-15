@@ -12,6 +12,10 @@ import java.util.ResourceBundle;
  * - Storing the current Locale
  * - Loading the appropriate ResourceBundle
  * - Providing localized strings by key
+ *
+ *  @author Shane O'Connell
+ *  @author Joshua MacPherson
+ *  @version Java 21
  */
 public class languageController {
     /** Singleton instance of languageController. */

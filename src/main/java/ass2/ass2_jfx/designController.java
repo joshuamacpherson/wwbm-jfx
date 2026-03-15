@@ -21,22 +21,39 @@ import java.util.ArrayList;
  * @version Java 21
  */
 public class designController {
+    /** Lists used to store questions and players */
     @FXML private VBox listViewContainer, questionForm, playerForm;
+    /** Text fields to update questions and player name */
     @FXML private TextField questionField, answerA, answerB, answerC, answerD, playerNameField;
+    /** ComboBox used to choose correct answer */
     @FXML private ComboBox<String> correctAns;
+    /** View all the default questions form dataStore + new questions added */
     @FXML private ListView<Question> questionListView;
+    /** View all the default players from dataStore + new players added */
     @FXML private ListView<Player> playerListView;
+    /** Changes a scene to question manager or player manager */
     @FXML private Button questionManager, playerManager;
+    /** Background image */
     @FXML private ImageView backgroundImage;
+    /** The table of players */
     @FXML private TableView<Player> playerTable;
+    /** Used to update player points */
     @FXML private TextField pointsField;
 
+    /** Used to control the language of the scene */
     private final languageController lc = languageController.getInstance();
+    /** Pulls the questions from dataStore */
     private final ArrayList<Question> questions = dataStore.getInstance().getQuestions();
+    /** Pulls the players from dataStore */
     private final ArrayList<Player> players = dataStore.getInstance().getPlayers();
+    /** Checks for null edits */
     private Question questionBeingEdited = null;
+    /** Checks for null edits */
     private Player playerBeingEdited = null;
 
+    /**
+     * Called the instant the program runs and executes.
+     */
     @FXML
     public void initialize() {
         for (int i = 0; i < 15; i++) questionListView.getItems().add(questions.get(i));

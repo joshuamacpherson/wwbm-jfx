@@ -5,6 +5,10 @@ import java.util.ArrayList;
  * Central in‑memory storage for all game data.
  * Implements a Singleton to ensure a single shared source of truth
  * for questions, players, and the currently selected player.
+ *
+ *  @author Shane O'Connell
+ *  @author Joshua MacPherson
+ *  @version Java 21
  */
 public class dataStore {
 

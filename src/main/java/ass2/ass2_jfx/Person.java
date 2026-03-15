@@ -2,6 +2,10 @@ package ass2.ass2_jfx;
 
 /**
  * Basic entity representing a person with a name.
+ *
+ *  @author Shane O'Connell
+ *  @author Joshua MacPherson
+ *  @version Java 21
  */
 public class Person {
 

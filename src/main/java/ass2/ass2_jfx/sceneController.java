@@ -28,6 +28,10 @@ import java.util.ResourceBundle;
  * - Applying CSS styles
  * - Resizing scenes relative to screen dimensions
  * - Switching between Play, Menu, and Design scenes
+ *
+ *  @author Shane O'Connell
+ *  @author Joshua MacPherson
+ *  @version Java 21
  */
 public class sceneController {
 

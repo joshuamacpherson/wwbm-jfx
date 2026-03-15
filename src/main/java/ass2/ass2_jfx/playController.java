@@ -25,36 +25,51 @@ import java.util.*;
  * - Restarting the game
  * - Navigating back to the main menu
  *
+ * @author Shane O'Connell
  * @author Joshua MacPherson
  * @version Java 21
  */
 public class playController {
+    /** Buttons for next question, restart, main menu, answers A–D, and lifelines. */
     @FXML private Button next, restart, mainMenu, A, B, C, D, fiftyFifty, phoneAFriend, askTheAudience;
+    /** Labels for the 15 money tiers and various UI text elements. */
     @FXML private Label t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15,
             messageLabel, playerMoneyAmountLabel, playerMoneyLabel, timerLabel, playerNameLabel;
+    /** Debug output text area. */
     @FXML private TextArea debugArea;
+    /** ImageView displaying the player's avatar. */
     @FXML private ImageView playerImageView;
-
+    /** Controls localization and UI language. */
     private final languageController lc = languageController.getInstance();
+    /** Array of answer buttons (A–D). */
     private Button[] answerButtons;
+    /** Array of tier labels (t1–t15). */
     private Label[] tiers;
+    /** Timer used for question countdowns. */
     private Timeline timer;
+    /** Remaining time in the countdown. */
     private int timeLeft;
+    /** Maps tier labels to their corresponding money values. */
     private LinkedHashMap<Label, Integer> tierMap;
+    /** Tracks the player's current money. */
     private int playerMoney;
-
+    /** Money values for each of the 15 tiers. */
     private final int[] prices = {
             100, 200, 300, 500, 1000,
             2000, 4000, 8000, 16000, 32000,
             64000, 125000, 250000, 500000, 1000000
     };
 
+    /** Tracks the player's current tier index. */
     private int currentTier = 0;
+    /** Whether the Superposition lifeline has been used. */
     private boolean superpositionUsed = false;
+    /** Whether the Entanglement lifeline has been used. */
     private boolean entanglementUsed = false;
+    /** Whether the Interference lifeline has been used. */
     private boolean interferenceUsed = false;
+    /** Stores the index of the entangled answer choice. */
     private int entangledIndex = -1;
-
     ArrayList<Question> questions = dataStore.getInstance().getQuestions();
 
     /**

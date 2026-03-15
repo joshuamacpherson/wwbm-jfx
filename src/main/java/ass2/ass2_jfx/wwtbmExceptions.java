@@ -2,6 +2,9 @@ package ass2.ass2_jfx;
 
 /**
  * Custom exceptions class
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class wwtbmExceptions extends Exception {
 

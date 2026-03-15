@@ -15,6 +15,10 @@ import javafx.scene.control.ChoiceDialog;
  * - Initializing localized button text
  * - Handling navigation to Play mode
  * - Handling navigation to Design mode
+ *
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class menuController {
 

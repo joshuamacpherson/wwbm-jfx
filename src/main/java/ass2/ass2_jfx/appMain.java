@@ -16,6 +16,10 @@ import java.util.ResourceBundle;
 
 /**
  * Main entry point for wwtbm game, loads main menu plus splash and runs the program.
+ *
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class appMain extends Application {
 

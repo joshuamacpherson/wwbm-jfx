@@ -13,12 +13,12 @@ package ass2.ass2_jfx;
  * - Play Mode (gameplay logic)
  *
  * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class Player extends Person {
-
     /** The total money the player has earned. */
     private int playerMoney;
-
     /** The player's current tier level. */
     private int playerTier;
 
