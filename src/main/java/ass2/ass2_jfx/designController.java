@@ -24,6 +24,8 @@ public class designController {
     @FXML private ListView<Player> playerListView;
     @FXML private Button questionManager, playerManager;
     @FXML private ImageView backgroundImage;
+    @FXML private TableView<Player> playerTable;
+    @FXML private TextField pointsField;
 
     private final languageController lc = languageController.getInstance();
     private final ArrayList<Question> questions = dataStore.getInstance().getQuestions();
@@ -58,294 +60,263 @@ public class designController {
     /** Adds a new question to the list after validating input fields. */
     @FXML
     private void addQuestion() {
-        String question = questionField.getText();
-        String[] questionAnswers = {
-                answerA.getText(), answerB.getText(),
-                answerC.getText(), answerD.getText()
-        };
-        int correctInd =
-                correctAns.getSelectionModel().getSelectedIndex();
+        try {
+            String question = questionField.getText();
+            String[] questionAnswers = {
+                    answerA.getText(), answerB.getText(),
+                    answerC.getText(), answerD.getText()
+            };
+            int correctInd = correctAns.getSelectionModel().getSelectedIndex();
 
-        if (question.isEmpty()
-                || questionAnswers[0].isEmpty()
-                || questionAnswers[1].isEmpty()
-                || questionAnswers[2].isEmpty()
-                || questionAnswers[3].isEmpty()
-                || correctInd == -1) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("validationError"));
-            alert.setHeaderText(null);
-            alert.setContentText(lc.getString("fillAllFields"));
-            alert.showAndWait();
-            return;
+            if (question.isEmpty()
+                    || questionAnswers[0].isEmpty()
+                    || questionAnswers[1].isEmpty()
+                    || questionAnswers[2].isEmpty()
+                    || questionAnswers[3].isEmpty()
+                    || correctInd == -1) {
+                throw new wwtbmExceptions("Please fill all fields before adding a question.");
+            }
+            Question q = new Question(question, questionAnswers, correctInd);
+            questions.add(q);
+            questionListView.getItems().add(q);
+
+            questionField.clear();
+            answerA.clear();
+            answerB.clear();
+            answerC.clear();
+            answerD.clear();
+            correctAns.getSelectionModel().clearSelection();
+
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle(lc.getString("questionAdded"));
+            success.setHeaderText(null);
+            success.setContentText(lc.getString("questionAddedSuccess"));
+            success.showAndWait();
+
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
-
-        Question q =
-                new Question(question, questionAnswers, correctInd);
-        questions.add(q);
-        questionListView.getItems().add(q);
-
-        questionField.clear();
-        answerA.clear();
-        answerB.clear();
-        answerC.clear();
-        answerD.clear();
-        correctAns.getSelectionModel().clearSelection();
-
-        Alert success = new Alert(Alert.AlertType.INFORMATION);
-        success.initOwner(sceneController.getInstance().getStage());
-        success.setTitle(lc.getString("questionAdded"));
-        success.setHeaderText(null);
-        success.setContentText(
-                lc.getString("questionAddedSuccess")
-        );
-        success.showAndWait();
     }
 
     /** Loads the selected question into the form fields for editing. */
     @FXML
     private void editQuestion() {
-        Question selected =
-                questionListView.getSelectionModel().getSelectedItem();
+        try {
+            Question selected = questionListView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                throw new wwtbmExceptions("Select a question to edit.");
+            }
 
-        if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("noSelection"));
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("selectQuestionEdit")
+            questionBeingEdited = selected;
+            questionField.setText(selected.getQuestionText());
+
+            String[] answers = selected.getAnswers();
+            answerA.setText(answers[0]);
+            answerB.setText(answers[1]);
+            answerC.setText(answers[2]);
+            answerD.setText(answers[3]);
+
+            correctAns.getSelectionModel().select(
+                    selected.isCorrect(0) ? 0
+                            : selected.isCorrect(1) ? 1
+                            : selected.isCorrect(2) ? 2 : 3
             );
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(lc.getString("editMode"));
+            alert.setHeaderText(null);
+            alert.setContentText(lc.getString("nowEditing"));
             alert.showAndWait();
-            return;
+
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
-
-        questionBeingEdited = selected;
-        questionField.setText(selected.getQuestionText());
-
-        String[] answers = selected.getAnswers();
-        answerA.setText(answers[0]);
-        answerB.setText(answers[1]);
-        answerC.setText(answers[2]);
-        answerD.setText(answers[3]);
-
-        correctAns.getSelectionModel().select(
-                selected.isCorrect(0) ? 0
-                        : selected.isCorrect(1) ? 1
-                        : selected.isCorrect(2) ? 2 : 3
-        );
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initOwner(sceneController.getInstance().getStage());
-        alert.setTitle(lc.getString("editMode"));
-        alert.setHeaderText(null);
-        alert.setContentText(lc.getString("nowEditing"));
-        alert.showAndWait();
     }
 
     /** Saves changes made to the currently edited question. */
     @FXML
     private void saveEditedQuestion() {
-        if (questionBeingEdited == null) return;
+        try {
+            if (questionBeingEdited == null) {
+                throw new wwtbmExceptions("No question is currently being edited.");
+            }
+            String question = questionField.getText();
+            String[] questionAnswers = {
+                    answerA.getText(), answerB.getText(),
+                    answerC.getText(), answerD.getText()
+            };
+            int correctInd = correctAns.getSelectionModel().getSelectedIndex();
 
-        String question = questionField.getText();
-        String[] questionAnswers = {
-                answerA.getText(), answerB.getText(),
-                answerC.getText(), answerD.getText()
-        };
-        int correctInd =
-                correctAns.getSelectionModel().getSelectedIndex();
+            if (question.isEmpty()
+                    || questionAnswers[0].isEmpty()
+                    || questionAnswers[1].isEmpty()
+                    || questionAnswers[2].isEmpty()
+                    || questionAnswers[3].isEmpty()
+                    || correctInd == -1) {
+                throw new wwtbmExceptions("Please fill all fields before saving.");
+            }
 
-        if (question.isEmpty()
-                || questionAnswers[0].isEmpty()
-                || questionAnswers[1].isEmpty()
-                || questionAnswers[2].isEmpty()
-                || questionAnswers[3].isEmpty()
-                || correctInd == -1) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("validationError"));
+            int index = questions.indexOf(questionBeingEdited);
+            Question updated = new Question(question, questionAnswers, correctInd);
+            questions.set(index, updated);
+            questionListView.getItems().set(index, updated);
+            questionBeingEdited = null;
+
+            questionField.clear();
+            answerA.clear();
+            answerB.clear();
+            answerC.clear();
+            answerD.clear();
+            correctAns.getSelectionModel().clearSelection();
+            questionListView.getSelectionModel().clearSelection();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(lc.getString("success"));
             alert.setHeaderText(null);
-            alert.setContentText(lc.getString("fillAllFields"));
+            alert.setContentText(lc.getString("changesSaved"));
             alert.showAndWait();
-            return;
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
-
-        int index = questions.indexOf(questionBeingEdited);
-        Question updated =
-                new Question(question, questionAnswers, correctInd);
-        questions.set(index, updated);
-        questionListView.getItems().set(index, updated);
-        questionBeingEdited = null;
-
-        questionField.clear();
-        answerA.clear();
-        answerB.clear();
-        answerC.clear();
-        answerD.clear();
-        correctAns.getSelectionModel().clearSelection();
-        questionListView.getSelectionModel().clearSelection();
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initOwner(sceneController.getInstance().getStage());
-        alert.setTitle(lc.getString("success"));
-        alert.setHeaderText(null);
-        alert.setContentText(lc.getString("changesSaved"));
-        alert.showAndWait();
     }
 
     /** Deletes the selected question after confirmation. */
     @FXML
     private void deleteQuestion() {
-        if (questions.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("noQuestions"));
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("noQuestionsToDelete")
-            );
-            alert.showAndWait();
-            return;
-        }
+        try {
+            if (questions.isEmpty()) {
+                throw new wwtbmExceptions("There are no questions to delete.");
+            }
 
-        Question selected =
-                questionListView.getSelectionModel().getSelectedItem();
+            Question selected = questionListView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                throw new wwtbmExceptions("Select a question to delete.");
+            }
 
-        if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("noSelectionS"));
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("selectQuestionDelete")
-            );
-            alert.showAndWait();
-            return;
-        }
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirm Delete");
+            confirm.setHeaderText(null);
+            confirm.setContentText("Are you sure you want to delete this question?");
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.initOwner(sceneController.getInstance().getStage());
-        confirm.setTitle(lc.getString("confirmDelete"));
-        confirm.setHeaderText(null);
-        confirm.setContentText(
-                lc.getString("confirmDeleteQuestion")
-        );
+            if (confirm.showAndWait().get() == ButtonType.OK) {
+                questions.remove(selected);
+                questionListView.getItems().remove(selected);
+            }
 
-        if (confirm.showAndWait().get() == ButtonType.OK) {
-            questions.remove(selected);
-            questionListView.getItems().remove(selected);
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
     }
 
-    /** Allows the admin to add a player to the game. */
+    /**
+     * Handles the Add Player button click.
+     * Creates a new player with name and starting money.
+     * Validates input and shows error messages if needed.
+     */
     @FXML
     private void addPlayer() {
-        String name = playerNameField.getText();
+        try {
+            String name = playerNameField.getText().trim();
+            if (name.isEmpty()) {
+                throw new wwtbmExceptions("Enter a player name.");
+            }
 
-        if (name.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("validationError"));
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("enterPlayerNamePrompt")
-            );
-            alert.showAndWait();
-            return;
+            int money = 0;
+            String moneyText = pointsField.getText().trim();
+            if (!moneyText.isEmpty()) {
+                try {
+                    money = Integer.parseInt(moneyText);
+                    if (money < 0) {
+                        throw new wwtbmExceptions("Money cannot be negative.");
+                    }
+                } catch (NumberFormatException e) {
+                    throw new wwtbmExceptions("Enter a valid number for money.");
+                }
+            }
+
+            Player newPlayer = new Player(name);
+            newPlayer.addMoneyToPlayer(money);
+            dataStore.getInstance().getPlayers().add(newPlayer);
+            playerListView.getItems().add(newPlayer);
+
+            playerNameField.clear();
+            pointsField.clear();
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
-
-        Player player = new Player(name);
-        dataStore.getInstance().getPlayers().add(player);
-        playerListView.getItems().add(player);
-        playerNameField.clear();
     }
 
     /** Allows the admin to edit an added player in the game. */
     @FXML
     private void editPlayer() {
-        Player selected =
-                playerListView.getSelectionModel().getSelectedItem();
-
+        Player selected = playerListView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("noSelection"));
-            alert.setHeaderText(null);
-            alert.setContentText(lc.getString("selectPlayerEdit"));
-            alert.showAndWait();
+            showError("Select a player to edit.");
             return;
         }
-
-        playerBeingEdited = selected;
         playerNameField.setText(selected.getName());
+        pointsField.setText(String.valueOf(selected.getPlayerMoney()));
     }
 
     /** Allows the admin to save an edited player in the game. */
     @FXML
     private void saveEditedPlayer() {
-        if (playerBeingEdited == null) return;
+        try {
+            Player selected = playerListView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                throw new wwtbmExceptions("No player selected to save.");
+            }
 
-        String name = playerNameField.getText();
+            String newName = playerNameField.getText().trim();
+            if (newName.isEmpty()) {
+                throw new wwtbmExceptions("Enter a player name.");
+            }
 
-        if (name.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("validationError"));
-            alert.setHeaderText(null);
-            alert.setContentText(lc.getString("enterPlayerNamePrompt"));
-            alert.showAndWait();
-            return;
+            int newMoney;
+            try {
+                newMoney = Integer.parseInt(pointsField.getText().trim());
+                if (newMoney < 0) {
+                    throw new wwtbmExceptions("Money cannot be negative.");
+                }
+            } catch (NumberFormatException e) {
+                throw new wwtbmExceptions("Enter a valid number for money.");
+            }
+
+            selected.resetPlayerMoney(); // reset old money
+            selected.addMoneyToPlayer(newMoney); // apply new money
+
+            playerListView.refresh();
+            playerNameField.clear();
+            pointsField.clear();
+
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
-
-        int ind = playerListView.getSelectionModel().getSelectedIndex();
-        Player updated = new Player(name);
-        dataStore.getInstance().getPlayers().set(ind, updated);
-
-        playerListView.getItems().set(ind, updated);
-
-        playerBeingEdited = null;
-        playerNameField.clear();
-        playerListView.getSelectionModel().clearSelection();
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initOwner(sceneController.getInstance().getStage());
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText("Player updated successfully.");
-        alert.showAndWait();
     }
 
-    /** Allows the admin to delete a player from the game. */
+    /**
+     * Allows the admin to delete a player from the game.
+     * Validates selection and shows confirmation before deleting.
+     */
     @FXML
     private void deletePlayer() {
-        Player selected =
-                playerListView.getSelectionModel().getSelectedItem();
+        try {
+            Player selected = playerListView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                throw new wwtbmExceptions("Select a player to delete.");
+            }
 
-        if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.initOwner(sceneController.getInstance().getStage());
-            alert.setTitle(lc.getString("noSelection"));
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    lc.getString("selectPlayerDelete")
-            );
-            alert.showAndWait();
-            return;
-        }
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirm Delete");
+            confirm.setHeaderText(null);
+            confirm.setContentText("Are you sure you want to delete this player?");
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.initOwner(sceneController.getInstance().getStage());
-        confirm.setTitle(lc.getString("confirmDelete"));
-        confirm.setHeaderText(null);
-        confirm.setContentText(
-                lc.getString("confirmDeletePlayer")
-        );
-
-        if (confirm.showAndWait().get() == ButtonType.OK) {
-            dataStore.getInstance().getPlayers().remove(selected);
-            playerListView.getItems().remove(selected);
+            if (confirm.showAndWait().get() == ButtonType.OK) {
+                dataStore.getInstance().getPlayers().remove(selected);
+                playerListView.getItems().remove(selected);
+            }
+        } catch (wwtbmExceptions e) {
+            showError(e.getMessage());
         }
     }
 
@@ -363,15 +334,9 @@ public class designController {
         playerForm.setVisible(false);
         playerForm.setManaged(false);
         playerManager.setText(lc.getString("playerManager"));
+        backgroundImage.setVisible(isQuestionFormVisible && !playerForm.isVisible());
 
-        backgroundImage.setVisible(
-                isQuestionFormVisible && !playerForm.isVisible()
-        );
-
-        if (isQuestionFormVisible) {
-            questionManager.setText(
-                    lc.getString("questionManager")
-            );
+        if (isQuestionFormVisible) {questionManager.setText(lc.getString("questionManager"));
         }
     }
 
@@ -391,9 +356,7 @@ public class designController {
         listViewContainer.setVisible(false);
         listViewContainer.setManaged(false);
 
-        questionManager.setText(
-                lc.getString("questionManager")
-        );
+        questionManager.setText(lc.getString("questionManager"));
         backgroundImage.setVisible(isVisible);
 
         if (isVisible) {
@@ -427,5 +390,17 @@ public class designController {
     private void onFRClick() throws IOException {
         menuBarHelper.setFrench();
         sceneController.getInstance().reloadCurrentScene();
+    }
+
+    /**
+     * Helper function for cleaner code.
+     * @param message shows an error message
+     */
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

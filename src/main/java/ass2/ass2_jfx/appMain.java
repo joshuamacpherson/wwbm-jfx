@@ -14,6 +14,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Main entry point for wwtbm game, loads main menu plus splash and runs the program.
+ */
 public class appMain extends Application {
 
     /** Toggles debug mode visibility. */

@@ -100,6 +100,8 @@
                     <TextField fx:id="playerNameField"
                                promptText="%enterPlayerName" maxWidth="400"
                                style="-fx-background-radius: 8;"/>
+                    <TextField fx:id="pointsField"
+                               promptText="Points to add"/>
                     <Button text="%addPlayer" maxWidth="200"
                             onAction="#addPlayer"/>
                     <Button text="%editPlayer" maxWidth="200"
