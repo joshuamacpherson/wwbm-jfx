@@ -9,6 +9,9 @@ package ass2.ass2_jfx;
  * - The index of the correct answer
  *
  * This class is immutable. Once created, its values cannot be changed.
+ *
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class Question {
 

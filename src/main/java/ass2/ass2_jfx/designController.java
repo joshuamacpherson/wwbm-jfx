@@ -15,6 +15,10 @@ import java.util.ArrayList;
  * - Editing existing questions
  * - Saving edited questions
  * - Deleting questions
+ *
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class designController {
     @FXML private VBox listViewContainer, questionForm, playerForm;

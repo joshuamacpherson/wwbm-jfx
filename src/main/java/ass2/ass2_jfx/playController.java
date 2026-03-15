@@ -24,6 +24,9 @@ import java.util.*;
  * - Handling answer selection
  * - Restarting the game
  * - Navigating back to the main menu
+ *
+ * @author Joshua MacPherson
+ * @version Java 21
  */
 public class playController {
     @FXML private Button next, restart, mainMenu, A, B, C, D, fiftyFifty, phoneAFriend, askTheAudience;

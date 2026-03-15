@@ -11,6 +11,8 @@ package ass2.ass2_jfx;
  * This class can be used in both:
  * - Design Mode (CRUD management)
  * - Play Mode (gameplay logic)
+ *
+ * @author Shane O'Connell
  */
 public class Player extends Person {
 
