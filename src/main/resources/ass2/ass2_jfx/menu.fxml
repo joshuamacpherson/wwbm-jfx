@@ -10,7 +10,7 @@
 <?import javafx.scene.control.MenuItem?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ass2.ass2_jfx.menuController"
+      fx:controller="ass2.ass2_jfx.controller.menuController"
       VBox.vgrow="ALWAYS">
     <MenuBar style="-fx-background-color: #3a006f;">
         <Menu text="%file">

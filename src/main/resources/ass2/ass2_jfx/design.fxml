@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<BorderPane fx:controller="ass2.ass2_jfx.designController"
+<BorderPane fx:controller="ass2.ass2_jfx.controller.designController"
             xmlns:fx="http://javafx.com/fxml">
     <top>
         <MenuBar style="-fx-background-color: #3a006f;">

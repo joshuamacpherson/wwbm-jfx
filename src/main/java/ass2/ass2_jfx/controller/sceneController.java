@@ -1,16 +1,13 @@
-package ass2.ass2_jfx;
+package ass2.ass2_jfx.controller;
 
+import ass2.ass2_jfx.view.appMain;
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.TextArea?>
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ass2.ass2_jfx.playController"
+      fx:controller="ass2.ass2_jfx.controller.playController"
       VBox.vgrow="ALWAYS">
 
     <MenuBar style="-fx-background-color: #3a006f;">

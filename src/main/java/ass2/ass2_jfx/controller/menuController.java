@@ -1,8 +1,12 @@
-package ass2.ass2_jfx;
+package ass2.ass2_jfx.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import ass2.ass2_jfx.model.Player;
+import ass2.ass2_jfx.model.dataStore;
+import ass2.ass2_jfx.view.menuBarHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

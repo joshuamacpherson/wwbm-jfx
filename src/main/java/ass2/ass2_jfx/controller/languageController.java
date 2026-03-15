@@ -1,4 +1,4 @@
-package ass2.ass2_jfx;
+package ass2.ass2_jfx.controller;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

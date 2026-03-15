@@ -1,5 +1,7 @@
-package ass2.ass2_jfx;
+package ass2.ass2_jfx.view;
 
+import ass2.ass2_jfx.controller.languageController;
+import ass2.ass2_jfx.controller.sceneController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;

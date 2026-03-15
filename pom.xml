@@ -90,7 +90,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>ass2.ass2_jfx/ass2.ass2_jfx.appMain</mainClass>
+                            <mainClass>ass2.ass2_jfx/ass2.ass2_jfx.view.appMain</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -108,7 +108,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ass2.ass2_jfx.appMain</mainClass>
+                            <mainClass>ass2.ass2_jfx.view.appMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

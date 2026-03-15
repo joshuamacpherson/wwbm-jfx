@@ -1,4 +1,4 @@
-package ass2.ass2_jfx;
+package ass2.ass2_jfx.model;
 
 /**
  * Custom exceptions class
