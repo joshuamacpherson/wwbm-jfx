@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.root {
+    -fx-font-family: "Ubuntu", Arial, sans-serif;
+    -fx-background-color: #121212;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.text {
+    -fx-fill: white;
+}
+
+.currentTier {
+    -fx-background-color: #4a2482;
+    -fx-background-radius: 6;
+    -fx-border-color: #5b2ca0;
+    -fx-border-radius: 6;
+    -fx-padding: 6 14 6 14;
+}
+
+#messageLabel {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 40px;
+}
+
+#titleLabel {
+    -fx-text-fill: #e8eefc;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+.button {
+    -fx-background-color: rgb(41, 41, 41);
+    -fx-border-color: #4a2482;
+    -fx-border-width: 2px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4a2482, #401f70);
+}
+
+.button:pressed {
+    -fx-background-color: #4a2482;
+}
+
+.button.secondary {
+    -fx-background-color: rgba(255,255,255,0.14);
+    -fx-text-fill: #e8eefc;
+}
+
+.button.secondary:hover {
+    -fx-background-color: rgba(255,255,255,0.20);
+}
+
+.text-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #aaaaaa;
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: rgba(255,255,255,0.2);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.combo-box {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: rgba(255,255,255,0.2);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.list-view {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 8;
+    -fx-control-inner-background: rgba(255,255,255,0.1);
+}
+
+.list-cell {
+    -fx-text-fill: white;
+}
+
+.menu-bar {
+    -fx-background-color: #3a006f;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: white;
+}
+
+.context-menu {
+    -fx-background-color: #2d2a3e;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: white;
+}
+
+.context-menu .menu-item:focused {
+    -fx-background-color: rgba(255,255,255,0.15);
+}
+
+.side-panel {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+}
+
+.ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ubuntu-medium {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ubuntu-bold {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.ubuntu-light-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.ubuntu-regular-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ubuntu-medium-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.ubuntu-bold-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+#playerImageView {
+    -fx-background-color: red;
+}

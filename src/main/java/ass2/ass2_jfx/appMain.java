@@ -38,6 +38,9 @@ public class appMain extends Application {
             sceneController sc = sceneController.getInstance();
             sc.setStage(stage);
             sc.showSplash();
+            stage.setTitle("Who Wants to Be a Millionaire");
+            stage.sizeToScene();
+            stage.centerOnScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,17 +69,16 @@ public class appMain extends Application {
             stage.setMinWidth(1200);
             stage.setMinHeight(800);
             stage.setResizable(true);
-            // Double delay cause debug mode explodes menu
+            stage.centerOnScreen();
             Platform.runLater(() -> {
-                Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initOwner(stage);
                     alert.setTitle("Debug Mode");
                     alert.setHeaderText(null);
                     alert.setContentText("Start with debug mode?");
 
                     Optional<ButtonType> result = alert.showAndWait();
                     DEBUG = result.isPresent() && result.get() == ButtonType.OK;
-                });
             });
 
             // Register stage with sceneController

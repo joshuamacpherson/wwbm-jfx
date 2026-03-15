@@ -193,7 +193,6 @@ public class playController {
 
         // reset player
         Player p = dataStore.getInstance().getCurrentPlayer();
-        p.resetPlayerMoney();
         p.resetPlayerTier();
 
         // reset lifelines
@@ -352,7 +351,13 @@ public class playController {
     /** Switches to light theme. */
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
     /** Sets language to English and refreshes UI text. */
-    @FXML private void onENClick() {menuBarHelper.setEnglish();updateLanguage();}
+    @FXML private void onENClick() {
+        menuBarHelper.setEnglish();
+        updateLanguage();
+    }
     /** Sets language to French and refreshes UI text. */
-    @FXML private void onFRClick() {menuBarHelper.setFrench();updateLanguage();}
+    @FXML private void onFRClick() {
+        menuBarHelper.setFrench();
+        updateLanguage();
+    }
 }

@@ -1,6 +1,7 @@
 package ass2.ass2_jfx;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
@@ -91,16 +93,18 @@ public class sceneController {
      */
     private void loadScene(String fxml) throws IOException {
         this.currentFxml = fxml;
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+
         ResourceBundle bundle = ResourceBundle.getBundle("ass2.ass2_jfx.QMillionaire", languageController.getInstance().getLocale());
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)), bundle);
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double width = screenBounds.getWidth() * 0.7;
-        double height = screenBounds.getHeight() * 0.7;
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, width, height);
         applyStyles(scene);
 
         stage.setScene(scene);
+        stage.setWidth(width);
+        stage.setHeight(height);
         stage.show();
     }
 
@@ -183,5 +187,9 @@ public class sceneController {
             app.loadMainMenu(stage);
         });
         delay.play();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

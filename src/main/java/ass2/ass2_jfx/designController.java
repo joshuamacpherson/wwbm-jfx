@@ -73,6 +73,7 @@ public class designController {
                 || questionAnswers[3].isEmpty()
                 || correctInd == -1) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("fillAllFields"));
@@ -93,6 +94,7 @@ public class designController {
         correctAns.getSelectionModel().clearSelection();
 
         Alert success = new Alert(Alert.AlertType.INFORMATION);
+        success.initOwner(sceneController.getInstance().getStage());
         success.setTitle(lc.getString("questionAdded"));
         success.setHeaderText(null);
         success.setContentText(
@@ -109,6 +111,7 @@ public class designController {
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
             alert.setContentText(
@@ -134,6 +137,7 @@ public class designController {
         );
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(sceneController.getInstance().getStage());
         alert.setTitle(lc.getString("editMode"));
         alert.setHeaderText(null);
         alert.setContentText(lc.getString("nowEditing"));
@@ -160,6 +164,7 @@ public class designController {
                 || questionAnswers[3].isEmpty()
                 || correctInd == -1) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("fillAllFields"));
@@ -183,6 +188,7 @@ public class designController {
         questionListView.getSelectionModel().clearSelection();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(sceneController.getInstance().getStage());
         alert.setTitle(lc.getString("success"));
         alert.setHeaderText(null);
         alert.setContentText(lc.getString("changesSaved"));
@@ -194,6 +200,7 @@ public class designController {
     private void deleteQuestion() {
         if (questions.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("noQuestions"));
             alert.setHeaderText(null);
             alert.setContentText(
@@ -208,6 +215,7 @@ public class designController {
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("noSelectionS"));
             alert.setHeaderText(null);
             alert.setContentText(
@@ -218,6 +226,7 @@ public class designController {
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.initOwner(sceneController.getInstance().getStage());
         confirm.setTitle(lc.getString("confirmDelete"));
         confirm.setHeaderText(null);
         confirm.setContentText(
@@ -237,6 +246,7 @@ public class designController {
 
         if (name.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
             alert.setContentText(
@@ -260,6 +270,7 @@ public class designController {
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("selectPlayerEdit"));
@@ -280,6 +291,7 @@ public class designController {
 
         if (name.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("validationError"));
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("enterPlayerNamePrompt"));
@@ -298,6 +310,7 @@ public class designController {
         playerListView.getSelectionModel().clearSelection();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(sceneController.getInstance().getStage());
         alert.setTitle("Success");
         alert.setHeaderText(null);
         alert.setContentText("Player updated successfully.");
@@ -312,6 +325,7 @@ public class designController {
 
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle(lc.getString("noSelection"));
             alert.setHeaderText(null);
             alert.setContentText(
@@ -322,6 +336,7 @@ public class designController {
         }
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.initOwner(sceneController.getInstance().getStage());
         confirm.setTitle(lc.getString("confirmDelete"));
         confirm.setHeaderText(null);
         confirm.setContentText(

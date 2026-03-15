@@ -33,6 +33,7 @@ public class menuController {
     public void onPlayClick(ActionEvent event) throws IOException {
         if (dataStore.getInstance().getQuestions().size() < 15) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle("Not Enough Questions");
             alert.setHeaderText(null);
             alert.setContentText("You must have 15 questions to start the game!");
@@ -44,6 +45,7 @@ public class menuController {
 
         if (players.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
             alert.setTitle("No Players Exist");
             alert.setHeaderText(null);
             alert.setContentText("Please Create a Player in Design Mode First.");
@@ -52,6 +54,7 @@ public class menuController {
         }
 
         ChoiceDialog<Player> dialog = new ChoiceDialog<>(players.get(0), players);
+        dialog.initOwner(sceneController.getInstance().getStage());
         dialog.setTitle("Select Player");
         dialog.setHeaderText("Choose a player");
         dialog.setContentText("Player: ");
