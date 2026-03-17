@@ -167,7 +167,9 @@ public class playController {
             if (currentTier == tiers.length - 1) {
                 messageLabel.setText(lc.getString("win"));
                 playerMoney += tierMap.get(tiers[currentTier]);Player p = dataStore.getInstance().getCurrentPlayer();
+                dataStore.getInstance().saveData();
                 p.addMoneyToPlayer(tierMap.get(tiers[currentTier]));
+                dataStore.getInstance().saveData();
                 playerMoney = p.getPlayerMoney();
                 playerMoneyAmountLabel.setText("$" + playerMoney);
                 setAnswerButtonsVisible(false);
@@ -237,6 +239,7 @@ public class playController {
     private void onMainMenuClick(ActionEvent event) {
         Player p = dataStore.getInstance().getCurrentPlayer();
         p.setPlayerMoney(playerMoney);
+        dataStore.getInstance().saveData();
         try {
             sceneController.getInstance().switchToMenu(event);
         } catch (IOException e) {

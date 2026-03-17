@@ -2,6 +2,7 @@ package ass2.ass2_jfx.view;
 
 import ass2.ass2_jfx.controller.languageController;
 import ass2.ass2_jfx.controller.sceneController;
+import ass2.ass2_jfx.model.dataStore;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -46,6 +47,9 @@ public class appMain extends Application {
         try {
             sceneController sc = sceneController.getInstance();
             sc.setStage(stage);
+            stage.setOnCloseRequest(event -> {
+                dataStore.getInstance().saveData();
+            });
             sc.showSplash();
             stage.setTitle("Who Wants to Be a Millionaire");
             stage.sizeToScene();

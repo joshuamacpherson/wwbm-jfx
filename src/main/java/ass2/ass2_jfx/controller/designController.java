@@ -26,39 +26,36 @@ import java.util.ArrayList;
  * @version Java 21
  */
 public class designController {
-    /** Lists used to store questions and players */
+    /** Lists used to store questions and players. */
     @FXML private VBox listViewContainer, questionForm, playerForm;
-    /** Text fields to update questions and player name */
+    /** Text fields to update questions and player name. */
     @FXML private TextField questionField, answerA, answerB, answerC, answerD, playerNameField;
-    /** ComboBox used to choose correct answer */
+    /** ComboBox used to choose correct answer. */
     @FXML private ComboBox<String> correctAns;
-    /** View all the default questions form dataStore + new questions added */
+    /** View all the default questions form dataStore + new questions added. */
     @FXML private ListView<Question> questionListView;
-    /** View all the default players from dataStore + new players added */
+    /** View all the default players from dataStore + new players added. */
     @FXML private ListView<Player> playerListView;
-    /** Changes a scene to question manager or player manager */
+    /** Changes a scene to question manager or player manager. */
     @FXML private Button questionManager, playerManager;
-    /** Background image */
+    /** Background image. */
     @FXML private ImageView backgroundImage;
-    /** The table of players */
+    /** The table of players. */
     @FXML private TableView<Player> playerTable;
-    /** Used to update player points */
+    /** Used to update player points. */
     @FXML private TextField pointsField;
-
-    /** Used to control the language of the scene */
+    /** Used to control the language of the scene. */
     private final languageController lc = languageController.getInstance();
-    /** Pulls the questions from dataStore */
+    /** Pulls the questions from dataStore. */
     private final ArrayList<Question> questions = dataStore.getInstance().getQuestions();
-    /** Pulls the players from dataStore */
+    /** Pulls the players from dataStore. */
     private final ArrayList<Player> players = dataStore.getInstance().getPlayers();
-    /** Checks for null edits */
+    /** Checks for null edits. */
     private Question questionBeingEdited = null;
-    /** Checks for null edits */
+    /** Checks for null edits. */
     private Player playerBeingEdited = null;
 
-    /**
-     * Called the instant the program runs and executes.
-     */
+    /** Called the instant the program runs and executes. */
     @FXML
     public void initialize() {
         for (int i = 0; i < 15; i++) questionListView.getItems().add(questions.get(i));
@@ -72,6 +69,7 @@ public class designController {
 
     /**
      * Switches back to the main menu scene.
+     *
      * @param event the button click event
      */
     @FXML
@@ -83,7 +81,9 @@ public class designController {
         }
     }
 
-    /** Adds a new question to the list after validating input fields. */
+    /**
+     * Adds a new question to the list after validating input fields.
+     */
     @FXML
     private void addQuestion() {
         try {
@@ -118,13 +118,16 @@ public class designController {
             success.setHeaderText(null);
             success.setContentText(lc.getString("questionAddedSuccess"));
             success.showAndWait();
+            dataStore.getInstance().saveData();
 
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
         }
     }
 
-    /** Loads the selected question into the form fields for editing. */
+    /**
+     * Loads the selected question into the form fields for editing.
+     */
     @FXML
     private void editQuestion() {
         try {
@@ -159,7 +162,9 @@ public class designController {
         }
     }
 
-    /** Saves changes made to the currently edited question. */
+    /**
+     * Saves changes made to the currently edited question.
+     */
     @FXML
     private void saveEditedQuestion() {
         try {
@@ -201,12 +206,15 @@ public class designController {
             alert.setHeaderText(null);
             alert.setContentText(lc.getString("changesSaved"));
             alert.showAndWait();
+            dataStore.getInstance().saveData();
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
         }
     }
 
-    /** Deletes the selected question after confirmation. */
+    /**
+     * Deletes the selected question after confirmation.
+     */
     @FXML
     private void deleteQuestion() {
         try {
@@ -228,7 +236,7 @@ public class designController {
                 questions.remove(selected);
                 questionListView.getItems().remove(selected);
             }
-
+            dataStore.getInstance().saveData();
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
         }
@@ -267,12 +275,15 @@ public class designController {
 
             playerNameField.clear();
             pointsField.clear();
+            dataStore.getInstance().saveData();
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
         }
     }
 
-    /** Allows the admin to edit an added player in the game. */
+    /**
+     * Allows the admin to edit an added player in the game.
+     */
     @FXML
     private void editPlayer() {
         Player selected = playerListView.getSelectionModel().getSelectedItem();
@@ -284,7 +295,9 @@ public class designController {
         pointsField.setText(String.valueOf(selected.getPlayerMoney()));
     }
 
-    /** Allows the admin to save an edited player in the game. */
+    /**
+     * Allows the admin to save an edited player in the game.
+     */
     @FXML
     private void saveEditedPlayer() {
         try {
@@ -314,6 +327,7 @@ public class designController {
             playerListView.refresh();
             playerNameField.clear();
             pointsField.clear();
+            dataStore.getInstance().saveData();
 
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
@@ -340,13 +354,16 @@ public class designController {
             if (confirm.showAndWait().get() == ButtonType.OK) {
                 dataStore.getInstance().getPlayers().remove(selected);
                 playerListView.getItems().remove(selected);
+                dataStore.getInstance().saveData();
             }
         } catch (wwtbmExceptions e) {
             showError(e.getMessage());
         }
     }
 
-    /** Toggles visibility between the question form and the list view. */
+    /**
+     * Toggles visibility between the question form and the list view.
+     */
     @FXML
     private void showQuestionForm() {
         boolean isQuestionFormVisible = questionForm.isVisible();
@@ -362,7 +379,8 @@ public class designController {
         playerManager.setText(lc.getString("playerManager"));
         backgroundImage.setVisible(isQuestionFormVisible && !playerForm.isVisible());
 
-        if (isQuestionFormVisible) {questionManager.setText(lc.getString("questionManager"));
+        if (isQuestionFormVisible) {
+            questionManager.setText(lc.getString("questionManager"));
         }
     }
 
@@ -391,15 +409,33 @@ public class designController {
         }
     }
 
-    /** Exits the game. */
-    @FXML private void onExitClick()  { menuBarHelper.exit(); }
-    /** Switches the UI to dark mode. */
-    @FXML private void onDarkClick()  { menuBarHelper.setDark(); }
-    /** Switches the UI to light mode. */
-    @FXML private void onLightClick() { menuBarHelper.setLight(); }
+    /**
+     * Exits the game.
+     */
+    @FXML
+    private void onExitClick() {
+        menuBarHelper.exit();
+    }
+
+    /**
+     * Switches the UI to dark mode.
+     */
+    @FXML
+    private void onDarkClick() {
+        menuBarHelper.setDark();
+    }
+
+    /**
+     * Switches the UI to light mode.
+     */
+    @FXML
+    private void onLightClick() {
+        menuBarHelper.setLight();
+    }
 
     /**
      * Switches the language to English and reloads the scene.
+     *
      * @throws IOException if the scene fails to reload
      */
     @FXML
@@ -410,6 +446,7 @@ public class designController {
 
     /**
      * Switches the language to French and reloads the scene.
+     *
      * @throws IOException if the scene fails to reload
      */
     @FXML
@@ -420,6 +457,7 @@ public class designController {
 
     /**
      * Helper function for cleaner code.
+     *
      * @param message shows an error message
      */
     private void showError(String message) {

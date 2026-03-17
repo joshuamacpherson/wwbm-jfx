@@ -11,7 +11,6 @@ import java.util.ArrayList;
  *  @version Java 21
  */
 public class dataStore {
-
     /** Singleton instance of the dataStore. */
     private static dataStore instance;
     /** The player currently selected for Play Mode. */
@@ -21,11 +20,8 @@ public class dataStore {
     /** List of all players available in Design and Play modes. */
     private final ArrayList<Player> players = new ArrayList<>();
 
-    /**
-     * Initializes the datastore with default questions
-     * and one permanent built‑in player.
-     */
-    private dataStore() {
+    /** Contains default questions and player. */
+    private void loadDefaultData() {
         questions.add(new Question("What is the capital of France?",
                 new String[]{"Berlin", "Madrid", "Paris", "Rome"}, 2));
         questions.add(new Question("What is 2 + 2?",
@@ -56,8 +52,26 @@ public class dataStore {
                 new String[]{"Helium", "Oxygen", "Hydrogen", "Carbon"}, 2));
         questions.add(new Question("What year did World War II end?",
                 new String[]{"1943", "1944", "1946", "1945"}, 3));
-
         players.add(new Player("Default Player"));
+    }
+
+    /**
+     * Saves the current in-memory game data to disk.
+     */
+    public void saveData() {
+        JsonPersistence.save(questions, players);
+    }
+
+    /**
+     * Initializes the datastore by attempting to load
+     * previously saved data from program.
+     */
+    private dataStore() {
+        JsonPersistence.load(questions, players);
+        // If no saved data exists, load defaults
+        if (questions.isEmpty()) {
+            loadDefaultData();
+        }
     }
 
     /**
