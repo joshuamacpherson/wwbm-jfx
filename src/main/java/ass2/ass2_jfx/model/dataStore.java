@@ -59,7 +59,7 @@ public class dataStore {
      * Saves the current in-memory game data to disk.
      */
     public void saveData() {
-        JsonPersistence.save(questions, players);
+        jsonPersistence.save(questions, players);
     }
 
     /**
@@ -67,7 +67,7 @@ public class dataStore {
      * previously saved data from program.
      */
     private dataStore() {
-        JsonPersistence.load(questions, players);
+        jsonPersistence.load(questions, players);
         // If no saved data exists, load defaults
         if (questions.isEmpty()) {
             loadDefaultData();
