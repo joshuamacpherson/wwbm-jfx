@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ass2.ass2_jfx"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ass2.ass2_jfx.controller"},{"l":"ass2.ass2_jfx.model"},{"l":"ass2.ass2_jfx.view"}];updateSearchResults();
