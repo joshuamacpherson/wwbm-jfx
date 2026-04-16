@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * @author Joshua MacPherson
  * @version Java 21
  */
-public class jsonPersistence {
+public class Persistence {
 
     /** Path to the save file inside the user's home directory. */
     private static final Path FILE_PATH = Path.of(
