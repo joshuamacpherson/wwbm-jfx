@@ -40,6 +40,8 @@ public class sceneController {
     private Stage stage;
     /** Tracks the last loaded FXML file for reload operations. */
     private String currentFxml;
+    /** To check if the current is host */
+    private boolean isHost;
     /** Private constructor for Singleton pattern, */
     private sceneController() {
     }
@@ -74,6 +76,17 @@ public class sceneController {
             scene.getStylesheets().clear();
             applyStyles(scene);
         }
+    }
+
+    public void switchToLobby(ActionEvent event, boolean host)
+            throws IOException {
+        this.isHost = host;
+        grabStageFromEvent(event);
+        loadScene("/ass2/ass2_jfx/multiplayer-lobby.fxml");
+    }
+
+    public boolean isHost() {
+        return isHost;
     }
 
     /**
@@ -188,6 +201,10 @@ public class sceneController {
             app.loadMainMenu(stage);
         });
         delay.play();
+    }
+
+    public void switchToMultiplayerPlay() throws IOException {
+        loadScene("/ass2/ass2_jfx/multiplayer-play.fxml");
     }
 
     public Stage getStage() {

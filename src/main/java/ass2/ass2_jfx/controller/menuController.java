@@ -31,6 +31,8 @@ public class menuController {
 
     /** Button used to open Design mode. */
     @FXML private Button designButton;
+    @FXML private Button hostButton;
+    @FXML private Button joinButton;
 
     /**
      * Handles the Play button click.
@@ -93,6 +95,26 @@ public class menuController {
         languageController lc = languageController.getInstance();
         playButton.setText(lc.getString("play"));
         designButton.setText(lc.getString("design"));
+    }
+
+    @FXML
+    public void onHostClick(ActionEvent event) throws IOException {
+        if (dataStore.getInstance().getQuestions().size() < 15) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(sceneController.getInstance().getStage());
+            alert.setTitle("Not Enough Questions");
+            alert.setHeaderText(null);
+            alert.setContentText(
+                    "You must have 15 questions to host a game!");
+            alert.show();
+            return;
+        }
+        sceneController.getInstance().switchToLobby(event, true);
+    }
+
+    @FXML
+    public void onJoinClick(ActionEvent event) throws IOException {
+        sceneController.getInstance().switchToLobby(event, false);
     }
 
     /** Exits the application. */

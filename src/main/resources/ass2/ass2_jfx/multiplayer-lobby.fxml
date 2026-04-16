@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ass2.ass2_jfx.controller.multiplayerLobbyController"
+      VBox.vgrow="ALWAYS">
+
+    <MenuBar style="-fx-background-color: #3a006f;">
+        <Menu text="%file">
+            <MenuItem text="%exit" onAction="#onExitClick"/>
+        </Menu>
+        <Menu text="%lookFeel">
+            <MenuItem text="%dark" onAction="#onDarkClick"/>
+            <MenuItem text="%light" onAction="#onLightClick"/>
+        </Menu>
+    </MenuBar>
+
+    <StackPane VBox.vgrow="ALWAYS">
+
+        <ImageView fitHeight="120" fitWidth="120"
+                   StackPane.alignment="TOP_CENTER"
+                   preserveRatio="true">
+            <StackPane.margin>
+                <Insets top="20"/>
+            </StackPane.margin>
+            <Image url="@/ass2/ass2_jfx/WWTBAMUS2020Logo.png"/>
+        </ImageView>
+
+        <VBox alignment="CENTER" spacing="15">
+            <padding>
+                <Insets top="160" left="40" right="40" bottom="40"/>
+            </padding>
+
+            <Label fx:id="statusLabel"
+                   text="Configure your game..."
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <!-- HOST CONTROLS -->
+            <HBox fx:id="hostPortBox" alignment="CENTER" spacing="10">
+                <Label text="Port:"
+                       style="-fx-font-size: 18px;"/>
+                <TextField fx:id="portFieldHost"
+                           promptText="e.g. 12345"
+                           prefWidth="150"
+                           style="-fx-font-size: 16px;"/>
+            </HBox>
+
+            <HBox fx:id="hostPlayerCountBox" alignment="CENTER"
+                  spacing="10">
+                <Label text="Max Players:"
+                       style="-fx-font-size: 18px;"/>
+                <Spinner fx:id="maxPlayersSpinner"
+                         prefWidth="100"
+                         style="-fx-font-size: 16px;"/>
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="15">
+                <Button fx:id="startHostingBtn"
+                        text="Start Hosting"
+                        style="-fx-font-size: 18px;"
+                        prefWidth="200" prefHeight="50"
+                        onAction="#onStartHosting"/>
+                <Button fx:id="startGameBtn"
+                        text="Start Game"
+                        style="-fx-font-size: 18px;"
+                        prefWidth="200" prefHeight="50"
+                        onAction="#onStartGame"/>
+            </HBox>
+
+            <!-- JOIN CONTROLS -->
+            <HBox fx:id="joinIpBox" alignment="CENTER" spacing="10">
+                <Label text="IP Address:"
+                       style="-fx-font-size: 18px;"/>
+                <TextField fx:id="ipField"
+                           promptText="e.g. 192.168.1.10"
+                           prefWidth="200"
+                           style="-fx-font-size: 16px;"/>
+            </HBox>
+
+            <HBox fx:id="joinPortBox" alignment="CENTER" spacing="10">
+                <Label text="Port:"
+                       style="-fx-font-size: 18px;"/>
+                <TextField fx:id="portFieldJoin"
+                           promptText="e.g. 12345"
+                           prefWidth="150"
+                           style="-fx-font-size: 16px;"/>
+            </HBox>
+
+            <Button fx:id="connectBtn"
+                    text="Connect"
+                    style="-fx-font-size: 18px;"
+                    prefWidth="200" prefHeight="50"
+                    onAction="#onConnect"/>
+
+            <!-- PLAYER LIST -->
+            <Label text="Players"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <ListView fx:id="playerListView"
+                      prefHeight="150" prefWidth="400"
+                      style="-fx-font-size: 16px;"/>
+
+            <!-- BACK BUTTON -->
+            <Button text="Back"
+                    style="-fx-font-size: 18px;"
+                    prefWidth="150" prefHeight="45"
+                    onAction="#onBackClick"/>
+        </VBox>
+    </StackPane>
+</VBox>
