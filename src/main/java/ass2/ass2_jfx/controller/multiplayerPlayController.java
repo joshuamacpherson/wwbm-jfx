@@ -1,6 +1,5 @@
 package ass2.ass2_jfx.controller;
 
-import ass2.ass2_jfx.model.dataStore;
 import ass2.ass2_jfx.view.menuBarHelper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,44 +7,100 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Controller for the Multiplayer Play screen.
+ * Handles all gameplay logic during a multiplayer session including:
+ * - Receiving and displaying questions from the server
+ * - Managing the countdown timer for each question
+ * - Submitting player answers to the server
+ * - Updating the scoreboard as results arrive
+ * - Displaying the live chat feed
+ * - Managing the three lifelines: Superposition, Entanglement, and Interference
+ * - Handling disconnection and returning to the main menu
+ * This controller registers itself as the message listener on the gameClient
+ * and processes all incoming server messages on the JavaFX Application Thread.
+ *
+ * @author Shane O'Connell
+ * @author Joshua MacPherson
+ * @version Java 21
+ */
 public class multiplayerPlayController {
 
-    @FXML private Label questionLabel, timerLabel, levelLabel;
-    @FXML private Label playerNameLabel, playerMoneyLabel,
-            playerMoneyAmountLabel;
-    @FXML private Button ansA, ansB, ansC, ansD;
-    @FXML private Button fiftyFifty, phoneAFriend, askTheAudience;
-    @FXML private Button sendChatBtn, disconnectBtn;
+    /** Label displaying the current question text or status message. */
+    @FXML private Label questionLabel;
+    /** Label displaying the remaining time for the current question. */
+    @FXML private Label timerLabel;
+    /** Label displaying the player's current level. */
+    @FXML private Label levelLabel;
+    /** Label displaying the player's name. */
+    @FXML private Label playerNameLabel;
+    /** Label for the money display heading. */
+    @FXML private Label playerMoneyLabel;
+    /** Label displaying the player's current money total. */
+    @FXML private Label playerMoneyAmountLabel;
+    /** Answer button A. */
+    @FXML private Button ansA;
+    /** Answer button B. */
+    @FXML private Button ansB;
+    /** Answer button C. */
+    @FXML private Button ansC;
+    /** Answer button D. */
+    @FXML private Button ansD;
+    /** Button to activate the Superposition (50/50) lifeline. */
+    @FXML private Button fiftyFifty;
+    /** Button to activate the Entanglement (phone a friend) lifeline. */
+    @FXML private Button phoneAFriend;
+    /** Button to activate the Interference (ask the audience) lifeline. */
+    @FXML private Button askTheAudience;
+    /** Button to send a chat message. */
+    @FXML private Button sendChatBtn;
+    /** Button to disconnect from the game and return to the menu. */
+    @FXML private Button disconnectBtn;
+    /** List view displaying the live scoreboard sorted by money earned. */
     @FXML private ListView<String> scoreboardList;
+    /** List view displaying the live chat feed. */
     @FXML private ListView<String> chatList;
+    /** Text field for typing chat messages. */
     @FXML private TextField chatInput;
-
+    /** Array of answer buttons for easy iteration. */
     private Button[] answerButtons;
+    /** The game client used to communicate with the server. */
     private gameClient client;
+    /** The name of the current player. */
     private String playerName;
+    /** The player's current money total. */
     private int playerMoney = 0;
+    /** The player's current question level. */
     private int currentLevel = 1;
+    /** The countdown timer for each question. */
     private Timeline timer;
+    /** Remaining seconds on the current countdown. */
     private int timeLeft;
-
+    /** Whether the Superposition lifeline has been used this session. */
     private boolean superpositionUsed = false;
+    /** Whether the Entanglement lifeline has been used this session. */
     private boolean entanglementUsed = false;
+    /** Whether the Interference lifeline has been used this session. */
     private boolean interferenceUsed = false;
-
+    /** The answer texts for the current question. */
     private String[] currentAnswers;
-    private final Map<String, Integer> scoreboard =
-            new LinkedHashMap<>();
-
+    /** Maps player names to their total money earned, used for the scoreboard. */
+    private final Map<String, Integer> scoreboard = new LinkedHashMap<>();
+    /** Prize money values for each of the 15 question tiers. */
     private final int[] prices = {
             100, 200, 300, 500, 1000,
             2000, 4000, 8000, 16000, 32000,
             64000, 125000, 250000, 500000, 1000000
     };
 
+    /**
+     * Initializes the play screen.
+     * Retrieves the client and player name from the shared multiplayerState,
+     * sets up the message listener, and waits for the first question.
+     */
     @FXML
     private void initialize() {
         answerButtons = new Button[]{ansA, ansB, ansC, ansD};
@@ -58,13 +113,17 @@ public class multiplayerPlayController {
         playerMoneyAmountLabel.setText("$0");
         levelLabel.setText("Level: 1");
 
-        // listen for server messages
         client.setOnMessageReceived(this::handleServerMessage);
 
         setAnswerButtonsDisabled(true);
         questionLabel.setText("Waiting for first question...");
     }
 
+    /**
+     * Handles an incoming message from the server.
+     * Routes the message based on its type: QUESTION, RESULT, CHAT, START, DISCONNECT, or ERROR.
+     * @param message the raw message string received from the server
+     */
     private void handleServerMessage(String message) {
         String[] parts = networkProtocol.parse(message);
         if (parts.length == 0) return;
@@ -72,7 +131,6 @@ public class multiplayerPlayController {
         switch (parts[0]) {
 
             case networkProtocol.QUESTION -> {
-                // QUESTION|text|A|B|C|D
                 if (parts.length >= 6) {
                     questionLabel.setText(parts[1]);
                     currentAnswers = new String[]{
@@ -89,30 +147,23 @@ public class multiplayerPlayController {
             }
 
             case networkProtocol.RESULT -> {
-                // RESULT|playerId|correct|moneyEarned
                 if (parts.length >= 4) {
                     String id = parts[1];
-                    boolean correct =
-                            Boolean.parseBoolean(parts[2]);
+                    boolean correct = Boolean.parseBoolean(parts[2]);
                     int earned = Integer.parseInt(parts[3]);
 
-                    // update scoreboard for everyone
                     scoreboard.merge(id, earned, Integer::sum);
                     refreshScoreboard();
 
-                    // update own money display
                     if (id.equals(playerName)) {
                         if (correct) {
                             playerMoney += earned;
-                            playerMoneyAmountLabel.setText(
-                                    "$" + playerMoney);
+                            playerMoneyAmountLabel.setText("$" + playerMoney);
                             currentLevel++;
-                            levelLabel.setText(
-                                    "Level: " + currentLevel);
+                            levelLabel.setText("Level: " + currentLevel);
                         }
                     }
 
-                    // game over
                     if (parts[2].equals("GAMEOVER")) {
                         questionLabel.setText("Game Over!");
                         setAnswerButtonsDisabled(true);
@@ -122,18 +173,14 @@ public class multiplayerPlayController {
             }
 
             case networkProtocol.CHAT -> {
-                // CHAT|playerName|msg
                 if (parts.length >= 3) {
-                    chatList.getItems().add(
-                            parts[1] + ": " + parts[2]);
-                    chatList.scrollTo(
-                            chatList.getItems().size() - 1);
+                    chatList.getItems().add(parts[1] + ": " + parts[2]);
+                    chatList.scrollTo(chatList.getItems().size() - 1);
                 }
             }
 
             case networkProtocol.START -> {
-                chatList.getItems().add(
-                        "Game started!");
+                chatList.getItems().add("Game started!");
             }
 
             case networkProtocol.DISCONNECT -> {
@@ -145,13 +192,18 @@ public class multiplayerPlayController {
 
             case networkProtocol.ERROR -> {
                 if (parts.length >= 2) {
-                    chatList.getItems().add(
-                            "ERROR: " + parts[1]);
+                    chatList.getItems().add("ERROR: " + parts[1]);
                 }
             }
         }
     }
 
+    /**
+     * Handles an answer button click.
+     * Stops the timer, determines which button was clicked, sends the answer
+     * index to the server, and waits for results.
+     * @param event the button click event
+     */
     @FXML
     private void onAnswerClick(ActionEvent event) {
         if (timer != null) timer.stop();
@@ -172,6 +224,10 @@ public class multiplayerPlayController {
         }
     }
 
+    /**
+     * Handles the Send Chat button click.
+     * Sends the typed message to the server and clears the input field.
+     */
     @FXML
     private void onSendChat() {
         String msg = chatInput.getText().trim();
@@ -181,13 +237,18 @@ public class multiplayerPlayController {
         }
     }
 
+    /**
+     * Handles the Disconnect button click.
+     * Stops the timer, disconnects the client, stops the server if hosting,
+     * and returns to the main menu.
+     * @param event the button click event
+     */
     @FXML
     private void onDisconnect(ActionEvent event) {
         if (timer != null) timer.stop();
         if (client != null) client.disconnect(playerName);
 
-        gameServer server = multiplayerState.getInstance()
-                .getServer();
+        gameServer server = multiplayerState.getInstance().getServer();
         if (server != null) server.stop();
 
         try {
@@ -197,16 +258,16 @@ public class multiplayerPlayController {
         }
     }
 
-    // ── Lifelines ──
-
+    /**
+     * Activates the Superposition lifeline.
+     * Randomly disables two of the four answer buttons.
+     * Can only be used once per game.
+     */
     @FXML
     private void useSuperposition() {
         if (superpositionUsed || currentAnswers == null) return;
 
-        // client-side: disable 2 random non-correct buttons
-        // we don't know correct answer, so just disable 2 random
-        List<Integer> indices = new ArrayList<>(
-                Arrays.asList(0, 1, 2, 3));
+        List<Integer> indices = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
         Collections.shuffle(indices);
 
         int disabled = 0;
@@ -220,43 +281,50 @@ public class multiplayerPlayController {
         fiftyFifty.setDisable(true);
     }
 
+    /**
+     * Activates the Entanglement lifeline.
+     * Highlights a random answer button green as a friend's suggestion.
+     * Can only be used once per game.
+     */
     @FXML
     private void useEntanglement() {
         if (entanglementUsed) return;
-        // highlight a random answer as "friend's suggestion"
         int idx = new Random().nextInt(4);
-        answerButtons[idx].setStyle(
-                "-fx-background-color: green;");
+        answerButtons[idx].setStyle("-fx-background-color: green;");
         entanglementUsed = true;
         phoneAFriend.setDisable(true);
     }
 
+    /**
+     * Activates the Interference lifeline.
+     * Highlights a random answer button green as the audience's suggestion.
+     * Can only be used once per game.
+     */
     @FXML
     private void useInterference() {
         if (interferenceUsed) return;
         int idx = new Random().nextInt(4);
-        answerButtons[idx].setStyle(
-                "-fx-background-color: green;");
+        answerButtons[idx].setStyle("-fx-background-color: green;");
         interferenceUsed = true;
         askTheAudience.setDisable(true);
     }
 
-    // ── Helpers ──
-
+    /**
+     * Starts a 60-second countdown timer for the current question.
+     * When time runs out, disables answer buttons and sends a timeout answer of -1.
+     */
     private void startTimer() {
         if (timer != null) timer.stop();
         timeLeft = 60;
         timerLabel.setText(String.valueOf(timeLeft));
 
-        timer = new Timeline(new KeyFrame(
-                Duration.seconds(1), e -> {
+        timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             timeLeft--;
             timerLabel.setText(String.valueOf(timeLeft));
             if (timeLeft <= 0) {
                 timer.stop();
                 setAnswerButtonsDisabled(true);
                 questionLabel.setText("Time's up!");
-                // send a timeout answer (-1)
                 client.sendAnswer(playerName, -1);
             }
         }));
@@ -264,24 +332,35 @@ public class multiplayerPlayController {
         timer.play();
     }
 
+    /**
+     * Enables or disables all four answer buttons at once.
+     * @param disabled true to disable all buttons, false to enable them
+     */
     private void setAnswerButtonsDisabled(boolean disabled) {
         for (Button btn : answerButtons) {
             btn.setDisable(disabled);
         }
     }
 
+    /**
+     * Clears and rebuilds the scoreboard list view, sorted by money earned descending.
+     */
     private void refreshScoreboard() {
         scoreboardList.getItems().clear();
         scoreboard.entrySet().stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue()
-                        .reversed())
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .forEach(e -> scoreboardList.getItems().add(
                         e.getKey() + " — $" + e.getValue()));
     }
 
+    /** Exits the application. */
     @FXML private void onExitClick() { menuBarHelper.exit(); }
+    /** Applies the dark theme. */
     @FXML private void onDarkClick() { menuBarHelper.setDark(); }
+    /** Applies the light theme. */
     @FXML private void onLightClick() { menuBarHelper.setLight(); }
+    /** Switches the application language to English. */
     @FXML private void onENClick() { menuBarHelper.setEnglish(); }
+    /** Switches the application language to French. */
     @FXML private void onFRClick() { menuBarHelper.setFrench(); }
 }
