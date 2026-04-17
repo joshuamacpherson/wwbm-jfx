@@ -2,6 +2,8 @@ package ass2.ass2_jfx.controller;
 
 import ass2.ass2_jfx.model.Question;
 import ass2.ass2_jfx.model.dataStore;
+import ass2.ass2_jfx.model.networkProtocol;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -129,7 +131,8 @@ public class gameServer {
         broadcast(networkProtocol.build(
                 networkProtocol.QUESTION,
                 q.getQuestionText(),
-                answers[0], answers[1], answers[2], answers[3]
+                answers[0], answers[1], answers[2], answers[3],
+                String.valueOf(q.getCorrectIndex())
         ));
         playerAnswers.clear();
     }
@@ -269,19 +272,14 @@ public class gameServer {
      * writing outgoing messages back to the client.
      */
     public static class ClientHandler implements Runnable {
-
         /** The socket connection to this client. */
         private final Socket socket;
-
         /** Reference to the parent server for message handling. */
         private final gameServer server;
-
         /** Writer used to send messages to this client. */
         private PrintWriter out;
-
         /** Reader used to receive messages from this client. */
         private BufferedReader in;
-
         /** The display name of this player, set on CONNECT. */
         private String playerName = "Unknown";
 

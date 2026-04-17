@@ -1,5 +1,7 @@
 package ass2.ass2_jfx.controller;
 
+import ass2.ass2_jfx.model.networkProtocol;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.function.Consumer;

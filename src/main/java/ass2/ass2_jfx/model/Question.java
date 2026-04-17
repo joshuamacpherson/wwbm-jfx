@@ -77,6 +77,13 @@ public class Question {
     }
 
     /**
+     * Returns the index of the correct answer in the answers array.
+     *
+     * @return the zero-based index of the correct answer
+     */
+    public int getCorrectIndex() { return correctIndex; }
+
+    /**
      * Returns the question text.
      * This is used by ListView<Question> to display the question.
      * @return the question text

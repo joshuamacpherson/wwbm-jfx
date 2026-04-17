@@ -34,7 +34,6 @@ public class Persistence {
 
     /** Delimiter used to separate fields in each line. */
     private static final String DELIM = "|";
-
     /** Escaped delimiter for use in String.split() regex. */
     private static final String DELIM_REGEX = "\\|";
 
@@ -57,22 +56,18 @@ public class Persistence {
             }
             sb.append("QUESTION")
                     .append(DELIM).append(escape(q.getQuestionText()));
-
             for (String answer : q.getAnswers()) {
                 sb.append(DELIM).append(escape(answer));
             }
-
             sb.append(DELIM).append(correctIndex)
                     .append("\n");
         }
-
         for (Player p : players) {
             sb.append("PLAYER")
                     .append(DELIM).append(escape(p.getName()))
                     .append(DELIM).append(p.getPlayerMoney())
                     .append("\n");
         }
-
         try {
             Files.writeString(FILE_PATH, sb.toString());
         } catch (IOException e) {
@@ -100,7 +95,6 @@ public class Persistence {
             for (String line : content.split("\n")) {
                 line = line.trim();
                 if (line.isEmpty()) continue;
-
                 String[] parts = line.split(DELIM_REGEX, -1);
 
                 if (parts[0].equals("QUESTION") && parts.length == 7) {
@@ -113,14 +107,12 @@ public class Persistence {
                     };
                     int correct = Integer.parseInt(parts[6]);
                     questions.add(new Question(qText, answers, correct));
-
                 } else if (parts[0].equals("PLAYER") && parts.length == 3) {
                     Player p = new Player(unescape(parts[1]));
                     p.setPlayerMoney(Integer.parseInt(parts[2]));
                     players.add(p);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

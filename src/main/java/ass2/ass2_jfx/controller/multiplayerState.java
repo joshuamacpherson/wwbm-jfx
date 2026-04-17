@@ -11,7 +11,6 @@ package ass2.ass2_jfx.controller;
  * @version Java 21
  */
 public class multiplayerState {
-
     /** Singleton instance of multiplayerState. */
     private static multiplayerState instance;
     /** The game client used to communicate with the server. */

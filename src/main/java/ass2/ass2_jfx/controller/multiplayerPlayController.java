@@ -1,5 +1,6 @@
 package ass2.ass2_jfx.controller;
 
+import ass2.ass2_jfx.model.networkProtocol;
 import ass2.ass2_jfx.view.menuBarHelper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -95,6 +96,8 @@ public class multiplayerPlayController {
             2000, 4000, 8000, 16000, 32000,
             64000, 125000, 250000, 500000, 1000000
     };
+    /** Index for lifelines */
+    private int correctIndex = -1;
 
     /**
      * Initializes the play screen.
@@ -126,7 +129,9 @@ public class multiplayerPlayController {
      */
     private void handleServerMessage(String message) {
         String[] parts = networkProtocol.parse(message);
-        if (parts.length == 0) return;
+        if (parts.length >= 7) {
+            correctIndex = Integer.parseInt(parts[6]);
+        }
 
         switch (parts[0]) {
 
@@ -266,17 +271,13 @@ public class multiplayerPlayController {
     @FXML
     private void useSuperposition() {
         if (superpositionUsed || currentAnswers == null) return;
-
-        List<Integer> indices = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
-        Collections.shuffle(indices);
-
-        int disabled = 0;
-        for (int i : indices) {
-            if (disabled >= 2) break;
-            answerButtons[i].setDisable(true);
-            disabled++;
+        ArrayList<Integer> wrong = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            if (i != correctIndex) wrong.add(i);
         }
-
+        Collections.shuffle(wrong);
+        answerButtons[wrong.get(0)].setDisable(true);
+        answerButtons[wrong.get(1)].setDisable(true);
         superpositionUsed = true;
         fiftyFifty.setDisable(true);
     }
@@ -289,8 +290,7 @@ public class multiplayerPlayController {
     @FXML
     private void useEntanglement() {
         if (entanglementUsed) return;
-        int idx = new Random().nextInt(4);
-        answerButtons[idx].setStyle("-fx-background-color: green;");
+        answerButtons[correctIndex].setStyle("-fx-background-color: green;");
         entanglementUsed = true;
         phoneAFriend.setDisable(true);
     }
@@ -303,12 +303,11 @@ public class multiplayerPlayController {
     @FXML
     private void useInterference() {
         if (interferenceUsed) return;
-        int idx = new Random().nextInt(4);
+        int idx = new Random().nextDouble() < 0.5 ? correctIndex : new Random().nextInt(4);
         answerButtons[idx].setStyle("-fx-background-color: green;");
         interferenceUsed = true;
         askTheAudience.setDisable(true);
     }
-
     /**
      * Starts a 60-second countdown timer for the current question.
      * When time runs out, disables answer buttons and sends a timeout answer of -1.
